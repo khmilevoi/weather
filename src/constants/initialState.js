@@ -5,11 +5,12 @@ export const initialState = {
   },
   currentCity: {
     city: null,
-    isLoading: false
+    isLoading: false,
+    list: []
   },
   weather: {
-    cities: null,
-    cityStorage: null
+    cities: [],
+    cityStorage: []
   },
   localStorage: {
     cities: []

@@ -7,7 +7,8 @@ export const app = {
 export const currentCity = {
   SET: "currentCity/city/set",
   LOADING: "currentCity/isLoading/loading",
-  LOADED: "currentCity/isLoading/loaded"
+  LOADED: "currentCity/isLoading/loaded",
+  SET_LIST: "currentCity/list/set"
 };
 
 export const weather = {

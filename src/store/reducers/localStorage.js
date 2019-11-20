@@ -2,6 +2,9 @@ import { initialState } from "constants/initialState";
 import { weather } from "constants/actionTypes";
 import { setItem } from "api/localStorage";
 
+const loadToLocalStorage = data =>
+  setItem(process.env.LOCAL_STORAGE, JSON.stringify(data));
+
 export const localStorageReducer = (
   state = initialState.localStorage,
   { type, payload }
@@ -13,7 +16,7 @@ export const localStorageReducer = (
 
       if (!cities.includes(id)) {
         cities.push(id);
-        setItem(process.env.LOCAL_STORAGE, JSON.stringify(cities));
+        loadToLocalStorage(cities);
       }
 
       return { cities };
@@ -25,6 +28,7 @@ export const localStorageReducer = (
 
       if (index !== -1) {
         cities.splice(index, 1);
+        loadToLocalStorage(cities);
       }
 
       return { cities };

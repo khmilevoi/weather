@@ -22,10 +22,6 @@ export const removeCity = city => ({
   payload: city
 });
 
-export const updateCity = city => ({
-  type: weather.UPDATE_CITY,
-  payload: city
-});
 
 export const fetchCity = city => async dispatch => {
   dispatch(loading());
@@ -34,7 +30,7 @@ export const fetchCity = city => async dispatch => {
     dispatch(setError(error))
   );
   const parsed = await data.json();
-  dispatch(addCity([parsed]));
+  dispatch(addCity(parsed));
 
   dispatch(loaded());
 };

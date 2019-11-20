@@ -2,9 +2,9 @@ import { currentCity } from "constants/actionTypes";
 import { createHourlyForecastRequest } from "api/WeatherAPI";
 import { setError } from "./app";
 
-export const set = city => ({
+export const setCity = city => ({
   type: currentCity.SET,
-  payload: set
+  payload: city
 });
 
 export const loading = () => ({

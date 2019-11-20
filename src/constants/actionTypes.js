@@ -18,3 +18,7 @@ export const weather = {
   REMOVE_CITY: "weather/cities/remove",
   UPDATE_CITY: "weather/cities/update"
 };
+
+export const localStorage = {
+  SET_CITIES: "localStorage/cities/set"
+};

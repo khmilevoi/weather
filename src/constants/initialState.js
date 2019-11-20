@@ -1,7 +1,7 @@
 export const initialState = {
   app: {
     error: null,
-    isLoading: false
+    isLoading: 0
   },
   currentCity: {
     city: null,

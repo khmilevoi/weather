@@ -11,7 +11,7 @@ import { AutocompletePlace } from "components/AutocompletePlace";
 
 const useStyles = makeStyles(() => ({
   container: {
-    padding: "30px"
+    padding: "60px 30px"
   }
 }));
 

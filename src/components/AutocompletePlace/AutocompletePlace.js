@@ -14,9 +14,10 @@ export const AutocompletePlace = ({ onChange }) => {
   return (
     <AlgoliaPlaces
       options={options}
-      onChange={({ query, rawAnswer, suggestion, suggestionIndex }) =>
-        onChange(suggestion.name)
-      }
+      onChange={({ query, rawAnswer, suggestion, suggestionIndex }) => {
+        onChange(suggestion.name);
+        console.log(suggestion);
+      }}
     ></AlgoliaPlaces>
   );
 };

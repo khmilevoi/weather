@@ -1,1 +1,2 @@
-export { WidgetPanel } from "./WidgetPanel";
+import WidgetPanel from "./WidgetPanel";
+export { WidgetPanel };

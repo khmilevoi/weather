@@ -4,9 +4,9 @@ export const app = {
   LOADED: "app/isLoading/loaded"
 };
 
-export const addCityPanel = {
-  OPEN: "addCityPanel/open",
-  CLOSE: "addCityPanel/close"
+export const searchCityPanel = {
+  OPEN: "searchCityPanel/open",
+  CLOSE: "searchCityPanel/close"
 };
 
 export const currentCity = {
@@ -17,11 +17,13 @@ export const currentCity = {
 };
 
 export const weather = {
+<<<<<<< HEAD
   SET_CITIES: "weather/cities/set",
   ADD_CITY: "weather/cities/add",
+=======
+  ADD_CITIES: "weather/cities/add",
+>>>>>>> dev
   REMOVE_CITY: "weather/cities/remove"
 };
 
-export const localStorage = {
-  SET_CITIES: "localStorage/cities/set"
-};
+export const localStorage = {};

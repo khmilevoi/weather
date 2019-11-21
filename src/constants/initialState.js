@@ -3,7 +3,7 @@ export const initialState = {
     error: null,
     isLoading: 0
   },
-  addCityPanel: {
+  searchCityPanel: {
     opened: false
   },
   currentCity: {

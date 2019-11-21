@@ -2,24 +2,39 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 
 import { WidgetPanel } from "components/WidgetPanel";
 import { Header } from "components/Header";
-import { AddCityPanel } from "components/AddCityPanel";
+import { Loading } from "components/Loading";
+import { SearchCityPanel } from "components/SearchCityPanel";
+import { fetchCitiesFromLocalStorage } from "store/actions/localStorage";
 
-const App = ({ fetchCityStorage }) => {
+import * as s from "styles/App";
+
+const App = ({ fetchCitiesFromLocalStorage, loading }) => {
+  useEffect(() => {
+    fetchCitiesFromLocalStorage();
+  }, [fetchCitiesFromLocalStorage]);
+
   return (
-    <div className="App">
-      <AddCityPanel></AddCityPanel>
+    <s.App>
+      {loading && <Loading></Loading>}
       <Header></Header>
       <WidgetPanel></WidgetPanel>
-    </div>
+      <SearchCityPanel></SearchCityPanel>
+    </s.App>
   );
 };
 
-App.propTypes = {};
+App.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  fetchCitiesFromLocalStorage: PropTypes.func.isRequired
+};
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapStateToProps = state => ({
+  loading: !!state.app.isLoading
+});
 
-export default connect(null, mapDispatchToProps)(App);
+const mapDispatchToProps = { fetchCitiesFromLocalStorage };
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

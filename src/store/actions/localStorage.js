@@ -1,16 +1,10 @@
-import { localStorage } from "constants/actionTypes";
 import { fetchCities } from "./weather";
-import { getItem, setItem } from "api/localStorage";
-
-export const setCities = cities => ({
-  type: localStorage.SET_CITIES,
-  payload: cities
-});
+import { getItem, NAME_OF_ITEM } from "api/localStorage";
 
 export const fetchCitiesFromLocalStorage = () => dispatch => {
-  const localStorage = getItem(process.env.LOCAL_STORAGE) || [];
-  const cities = JSON.parse(localStorage);
+  const cities = getItem(NAME_OF_ITEM) || [];
 
-  dispatch(setCities(cities));
-  dispatch(fetchCities(cities));
+  if (cities.length > 0) {
+    dispatch(fetchCities(cities));
+  }
 };

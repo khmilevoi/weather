@@ -2,6 +2,8 @@ import { weather } from "constants/actionTypes";
 import { createForecastRequest } from "api/WeatherAPI";
 import { loading, setError, loaded } from "./app";
 
+import cityList from "static/city.list.min.json";
+
 export const setCities = cities => ({
   type: weather.SET_CITIES,
   payload: cities
@@ -21,7 +23,6 @@ export const removeCity = city => ({
   type: weather.REMOVE_CITY,
   payload: city
 });
-
 
 export const fetchCity = city => async dispatch => {
   dispatch(loading());
@@ -52,13 +53,12 @@ export const fetchCities = cities => async dispatch => {
   dispatch(loaded());
 };
 
-export const fetchCityStorage = () => async dispatch => {
-  dispatch(loading());
+export const fetchCityStorage = () => dispatch =>
+  setTimeout(() => {
+    dispatch(loading());
 
-  const data = await import("static/city.list.json").catch(error =>
-    dispatch(setError(error))
-  );
-  dispatch(setCityStorage(data));
+    const data = cityList;
+    dispatch(setCityStorage(data));
 
-  dispatch(loaded());
-};
+    dispatch(loaded());
+  }, 0);

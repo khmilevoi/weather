@@ -10,5 +10,5 @@ export const loading = () => ({
 });
 
 export const loaded = () => ({
-  type: app.LOADING
+  type: app.LOADED
 });

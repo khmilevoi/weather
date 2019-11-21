@@ -3,7 +3,7 @@ const config = {
 };
 
 export const createForecastRequest = (...id) =>
-  `https://api.openweathermap.org/data/2.5/weather?id=${id.join(",")}&appid=${
+  `https://api.openweathermap.org/data/2.5/group?id=${id.join(",")}&appid=${
     config.appid
   }&units=metric`;
 

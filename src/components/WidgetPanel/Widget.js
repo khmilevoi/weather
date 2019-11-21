@@ -1,7 +1,30 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-import { Grid } from "@material-ui/core";
+import { Grid, Fade, makeStyles } from "@material-ui/core";
 
-export const Widget = () => {
-  return <Grid item sm={3}></Grid>;
+const useStyles = makeStyles(() => ({
+  item: {
+    minWidth: "200px"
+  }
+}));
+
+export const Widget = ({ city }) => {
+  const classes = useStyles();
+
+  const weather = city.weather[0];
+
+  return (
+    <Grid item xs={3} className={classes.item}>
+      <img
+        style={{ width: "100%", height: "100%" }}
+        src={`${process.env.PUBLIC_URL}/img/${weather.icon}.png`}
+        alt=""
+      />
+    </Grid>
+  );
+};
+
+Widget.propTypes = {
+  city: PropTypes.object.isRequired
 };

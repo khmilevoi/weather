@@ -53,12 +53,12 @@ export const fetchCities = cities => async dispatch => {
   dispatch(loaded());
 };
 
-export const fetchCityStorage = () => dispatch =>
-  setTimeout(() => {
-    dispatch(loading());
+export const fetchCityStorage = () => async dispatch => {
+  dispatch(loading());
 
-    const data = cityList;
-    dispatch(setCityStorage(data));
+  const data = cityList;
+  await new Promise(r => setTimeout(r, 300));
+  dispatch(setCityStorage(data));
 
-    dispatch(loaded());
-  }, 0);
+  dispatch(loaded());
+};

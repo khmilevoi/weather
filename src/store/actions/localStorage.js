@@ -1,6 +1,6 @@
 import { localStorage } from "constants/actionTypes";
 import { fetchCities } from "./weather";
-import { getItem, setItem } from "api/localStorage";
+import { getItem } from "api/localStorage";
 
 export const setCities = cities => ({
   type: localStorage.SET_CITIES,
@@ -8,9 +8,11 @@ export const setCities = cities => ({
 });
 
 export const fetchCitiesFromLocalStorage = () => dispatch => {
-  const localStorage = getItem(process.env.LOCAL_STORAGE) || [];
-  const cities = JSON.parse(localStorage);
+  const cities = JSON.parse(getItem(process.env.LOCAL_STORAGE)) || [];
 
   dispatch(setCities(cities));
-  dispatch(fetchCities(cities));
+
+  if (cities.length > 0) {
+    dispatch(fetchCities(cities));
+  }
 };

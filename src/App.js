@@ -5,14 +5,16 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import { WidgetPanel } from "components/WidgetPanel";
-import Header from "components/Header/Header";
-import { fetchCityStorage } from "store/actions/weather";
+import { Header } from "components/Header";
 import { Loading } from "components/Loading";
+import { fetchCityStorage } from "store/actions/weather";
+import { fetchCitiesFromLocalStorage } from "store/actions/localStorage";
 
-const App = ({ fetchCityStorage, loading }) => {
+const App = ({ fetchCityStorage, fetchCitiesFromLocalStorage, loading }) => {
   useEffect(() => {
-    fetchCityStorage();
-  }, [fetchCityStorage]);
+    // fetchCityStorage();
+    fetchCitiesFromLocalStorage();
+  }, [fetchCityStorage, fetchCitiesFromLocalStorage]);
 
   return (
     <div className="App">
@@ -25,7 +27,8 @@ const App = ({ fetchCityStorage, loading }) => {
 
 App.propTypes = {
   loading: PropTypes.bool.isRequired,
-  fetchCityStorage: PropTypes.func.isRequired
+  fetchCityStorage: PropTypes.func.isRequired,
+  fetchCitiesFromLocalStorage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -33,6 +36,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ fetchCityStorage }, dispatch);
+  bindActionCreators(
+    { fetchCityStorage, fetchCitiesFromLocalStorage },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

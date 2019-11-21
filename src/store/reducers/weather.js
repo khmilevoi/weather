@@ -10,10 +10,6 @@ export const weatherReducer = (
       return { cities: payload };
     }
 
-    case weather.SET_CITY_STORAGE: {
-      return { cityStorage: payload };
-    }
-
     case weather.ADD_CITY: {
       const cities = Array.from(state.cities);
       const index = cities.findIndex(city => city.id === payload.id);

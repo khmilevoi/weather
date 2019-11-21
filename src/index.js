@@ -9,6 +9,7 @@ import CssBaseLine from "@material-ui/core/CssBaseline";
 import { configureStore } from "store/configureStore";
 import { initialState } from "constants/initialState";
 
+
 ReactDOM.render(
   <Router>
     <Provider store={configureStore(initialState)}>

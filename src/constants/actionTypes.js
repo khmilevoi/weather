@@ -17,12 +17,7 @@ export const currentCity = {
 };
 
 export const weather = {
-<<<<<<< HEAD
-  SET_CITIES: "weather/cities/set",
-  ADD_CITY: "weather/cities/add",
-=======
   ADD_CITIES: "weather/cities/add",
->>>>>>> dev
   REMOVE_CITY: "weather/cities/remove"
 };
 

@@ -27,7 +27,7 @@ export const fetchHourlyForecast = city => async dispatch => {
     dispatch(setError(error))
   );
   const parsed = await data.json();
-  dispatch(setList(parsed.list));
+  dispatch(setList(parsed.list.slice(0, 6)));
 
   dispatch(loaded());
 };

@@ -21,14 +21,14 @@ export const localStorageReducer = (
       });
       loadToLocalStorage(cities);
 
-      return { cities };
+      return { ...state, cities };
     }
 
     case weather.REMOVE_CITY: {
       const cities = Array.from(state.cities).filter(city => city !== payload);
       loadToLocalStorage(cities);
 
-      return { cities };
+      return { ...state, cities };
     }
     default: {
       return state;

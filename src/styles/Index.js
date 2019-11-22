@@ -25,9 +25,10 @@ export const SideButton = styled.button`
   justify-content: center;
   background-color: transparent;
   cursor: pointer;
+  transition: 0.1s;
 
   &:hover {
-    color: #000;
+    color: ${({ hoverColor }) => hoverColor || "#000"};
   }
 `;
 
@@ -47,4 +48,28 @@ const animationRule = css`
 
 export const Rotate = styled.div`
   animation: ${({ rotating }) => (rotating ? animationRule : `none`)};
+`;
+
+export const Temperature = styled.div`
+  font-size: 60px;
+  color: #757575;
+  padding-right: 20px;
+  position: relative;
+  line-height: 1;
+
+  &:after {
+    content: "°C";
+    font-size: 20px;
+    position: absolute;
+    top: 0;
+  }
+`;
+
+const createImgSrc = name => `${process.env.PUBLIC_URL}/img/${name}.png`;
+
+export const Icon = styled.img.attrs(({ name }) => ({
+  src: createImgSrc(name)
+}))`
+  height: 60px;
+  transform: scale(2) translateX(10%);
 `;

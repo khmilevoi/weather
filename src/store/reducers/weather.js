@@ -17,7 +17,7 @@ export const weatherReducer = (
         }
       });
 
-      return { cities };
+      return { ...state, cities };
     }
 
     case weather.LOADED: {
@@ -31,7 +31,7 @@ export const weatherReducer = (
         }
       });
 
-      return { cities };
+      return { ...state, cities };
     }
 
     case weather.ADD_CITIES: {
@@ -47,7 +47,7 @@ export const weatherReducer = (
         }
       });
 
-      return { cities };
+      return { ...state, cities };
     }
 
     case weather.REMOVE_CITY: {
@@ -55,7 +55,7 @@ export const weatherReducer = (
         city => city.id !== payload
       );
 
-      return { cities };
+      return { ...state, cities };
     }
 
     default: {

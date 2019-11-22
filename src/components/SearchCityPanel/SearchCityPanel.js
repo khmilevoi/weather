@@ -16,18 +16,18 @@ import {
 import { close } from "store/actions/searchCityPanel";
 import { fetchCities } from "store/actions/weather";
 
-const useStyles = makeStyles(() => ({
-  input: {
-    width: "100%"
-  }
-}));
-
 const cities = [
   {
     id: 707860,
     name: "Hurzuf",
     country: "UA",
     coord: { lon: 34.283333, lat: 44.549999 }
+  },
+  {
+    id: 706483,
+    name: "Kharkiv",
+    country: "UA",
+    coord: { lon: 36.25, lat: 50 }
   },
   {
     id: 519188,
@@ -145,7 +145,16 @@ const cities = [
   }
 ];
 
-const SearchCityPanel = ({ opened, close, fetchCities }) => {
+const useStyles = makeStyles(() => ({
+  input: {
+    width: "100%"
+  },
+  paper: {
+    height: "100%"
+  }
+}));
+
+const SearchCityPanel = ({ opened, close, fetchCities, lsCities }) => {
   const [name, setName] = useState("");
 
   const classes = useStyles();
@@ -153,15 +162,17 @@ const SearchCityPanel = ({ opened, close, fetchCities }) => {
   return (
     <Dialog
       open={opened}
-      onClose={() => close()}
+      onClose={() => close() && setName("")}
       maxWidth="sm"
       fullWidth={true}
+      classes={{ paper: classes.paper }}
     >
       <DialogTitle>
         <TextField
           label="Type the city"
           margin="normal"
           className={classes.input}
+          value={name}
           onChange={event => setName(event.target.value)}
         ></TextField>
       </DialogTitle>
@@ -169,7 +180,9 @@ const SearchCityPanel = ({ opened, close, fetchCities }) => {
         <List>
           {cities
             .filter(
-              city => city.name.toLowerCase().indexOf(name.toLowerCase()) !== -1
+              city =>
+                city.name.toLowerCase().indexOf(name.toLowerCase()) !== -1 &&
+                !lsCities.includes(city.id)
             )
             .map(city => (
               <ListItem
@@ -194,10 +207,14 @@ const SearchCityPanel = ({ opened, close, fetchCities }) => {
 SearchCityPanel.propTypes = {
   opened: PropTypes.bool.isRequired,
   close: PropTypes.func.isRequired,
-  fetchCities: PropTypes.func.isRequired
+  fetchCities: PropTypes.func.isRequired,
+  lsCities: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = state => ({ opened: state.searchCityPanel.opened });
+const mapStateToProps = state => ({
+  opened: state.searchCityPanel.opened,
+  lsCities: state.localStorage.cities
+});
 
 const mapDispatchToProps = { close, fetchCities };
 

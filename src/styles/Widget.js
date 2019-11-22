@@ -1,11 +1,23 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Widget = styled.div`
   width: 100%;
 `;
 
 export const Row = styled.div`
+  width: 100%;
   padding: 10px;
+
+  ${({ column }) =>
+    column
+      ? css`
+          display: block;
+        `
+      : css`
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        `}
 
   &:first-of-type {
     padding-top: 15px;
@@ -17,15 +29,13 @@ export const Row = styled.div`
 `;
 
 export const CityName = styled.div`
-  font-size: 24px;
-  word-break: break-word;
+  font-size: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const Time = styled.div`
-  font-size: 16px;
+  font-size: 12px;
   color: rgba(0, 0, 0, 0.54);
 `;
-
-export const Main = styled.div``;
-
-export const Icon = styled.div``;

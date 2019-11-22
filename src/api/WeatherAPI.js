@@ -8,7 +8,7 @@ export const createForecastRequest = (...id) =>
   }&units=metric`;
 
 export const createHourlyForecastRequest = id =>
-  `https://http://api.openweathermap.org/data/2.5/forecast?id=${id}&appid=${config.appid}&units=metric`;
+  `https://api.openweathermap.org/data/2.5/forecast?id=${id}&appid=${config.appid}&units=metric`;
 
 export const parseDt = dt => {
   const date = new Date(dt * 1000);

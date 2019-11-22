@@ -6,6 +6,34 @@ export const weatherReducer = (
   { type, payload }
 ) => {
   switch (type) {
+    case weather.LOADING: {
+      const cities = Array.from(state.cities);
+
+      payload.forEach(id => {
+        const index = cities.findIndex(city => city.id === id);
+
+        if (index !== -1) {
+          cities[index].isLoading = true;
+        }
+      });
+
+      return { cities };
+    }
+
+    case weather.LOADED: {
+      const cities = Array.from(state.cities);
+
+      payload.forEach(id => {
+        const index = cities.findIndex(city => city.id === id);
+
+        if (index !== -1) {
+          cities[index].isLoading = false;
+        }
+      });
+
+      return { cities };
+    }
+
     case weather.ADD_CITIES: {
       const cities = Array.from(state.cities);
 

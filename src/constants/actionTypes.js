@@ -18,7 +18,9 @@ export const currentCity = {
 
 export const weather = {
   ADD_CITIES: "weather/cities/add",
-  REMOVE_CITY: "weather/cities/remove"
+  REMOVE_CITY: "weather/cities/remove",
+  LOADING: "weather/isLoading/loading",
+  LOADED: "weather/isLoading/loaded"
 };
 
 export const localStorage = {};

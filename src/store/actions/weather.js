@@ -1,6 +1,6 @@
 import { weather } from "constants/actionTypes";
 import { createForecastRequest } from "api/WeatherAPI";
-import { loading, setError, loaded } from "./app";
+import { setError } from "./app";
 
 export const addCities = cities => ({
   type: weather.ADD_CITIES,
@@ -12,8 +12,18 @@ export const removeCity = city => ({
   payload: city
 });
 
+export const loading = cities => ({
+  type: weather.LOADING,
+  payload: cities
+});
+
+export const loaded = cities => ({
+  type: weather.LOADED,
+  payload: cities
+});
+
 export const fetchCities = (...cities) => async dispatch => {
-  dispatch(loading());
+  dispatch(loading(cities));
 
   const data = await fetch(createForecastRequest(...cities)).catch(error =>
     dispatch(setError(error))
@@ -21,5 +31,5 @@ export const fetchCities = (...cities) => async dispatch => {
   const parsed = await data.json();
   dispatch(addCities(parsed.list));
 
-  dispatch(loaded());
+  dispatch(loaded(cities));
 };

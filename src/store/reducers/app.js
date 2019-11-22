@@ -11,13 +11,13 @@ export const appReducer = (state = initialState.app, { type, payload }) => {
 
     case app.LOADING: {
       return {
-        isLoading: state.isLoading + 1
+        isLoading: true
       };
     }
 
     case app.LOADED: {
       return {
-        isLoading: state.isLoading - 1
+        isLoading: false
       };
     }
 

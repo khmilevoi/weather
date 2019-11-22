@@ -15,7 +15,11 @@ const WidgetPanel = ({ cities, fetchCities, removeCity }) => {
       <Container>
         <Grid container spacing={1}>
           {cities.map(city => (
-            <Widget key={city.id} city={city}></Widget>
+            <Widget
+              key={city.id}
+              city={city}
+              handleUpdate={() => fetchCities(city.id)}
+            ></Widget>
           ))}
         </Grid>
       </Container>

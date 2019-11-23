@@ -5,19 +5,22 @@ export const appReducer = (state = initialState.app, { type, payload }) => {
   switch (type) {
     case app.SET_ERROR: {
       return {
+        ...state,
         error: payload
       };
     }
 
     case app.LOADING: {
       return {
-        isLoading: state.isLoading + 1
+        ...state,
+        isLoading: true
       };
     }
 
     case app.LOADED: {
       return {
-        isLoading: state.isLoading - 1
+        ...state,
+        isLoading: false
       };
     }
 

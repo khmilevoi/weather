@@ -6,6 +6,34 @@ export const weatherReducer = (
   { type, payload }
 ) => {
   switch (type) {
+    case weather.LOADING: {
+      const cities = Array.from(state.cities);
+
+      payload.forEach(id => {
+        const index = cities.findIndex(city => city.id === id);
+
+        if (index !== -1) {
+          cities[index].isLoading = true;
+        }
+      });
+
+      return { ...state, cities };
+    }
+
+    case weather.LOADED: {
+      const cities = Array.from(state.cities);
+
+      payload.forEach(id => {
+        const index = cities.findIndex(city => city.id === id);
+
+        if (index !== -1) {
+          cities[index].isLoading = false;
+        }
+      });
+
+      return { ...state, cities };
+    }
+
     case weather.ADD_CITIES: {
       const cities = Array.from(state.cities);
 
@@ -15,11 +43,11 @@ export const weatherReducer = (
         if (index !== -1) {
           cities[index] = newCity;
         } else {
-          cities.push(newCity);
+          cities.unshift(newCity);
         }
       });
 
-      return { cities };
+      return { ...state, cities };
     }
 
     case weather.REMOVE_CITY: {
@@ -36,7 +64,7 @@ export const weatherReducer = (
       );
 >>>>>>> dev
 
-      return { cities };
+      return { ...state, cities };
     }
 
     default: {

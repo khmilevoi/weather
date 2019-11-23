@@ -8,12 +8,14 @@ export const searchCityPanelReducer = (
   switch (type) {
     case searchCityPanel.OPEN: {
       return {
+        ...state,
         opened: true
       };
     }
 
     case searchCityPanel.CLOSE: {
       return {
+        ...state,
         opened: false
       };
     }

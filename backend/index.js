@@ -1,6 +1,2 @@
-import { CityStorage } from "./CityStorage.js";
-import { cityList } from "./city.list.min.js";
+import { cityList } from "./city.list.min.json";
 
-const storage = new CityStorage(cityList);
-
-// storage.getSimilarByName("mariu").then(data => console.log(data));

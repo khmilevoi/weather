@@ -1,7 +1,7 @@
 export const initialState = {
   app: {
     error: null,
-    isLoading: 0
+    isLoading: false
   },
   searchCityPanel: {
     opened: false

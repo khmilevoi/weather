@@ -20,14 +20,17 @@ export const setList = list => ({
   payload: list
 });
 
-export const fetchHourlyForecast = city => async dispatch => {
+export const fetchHourlyForecast = city => async (dispatch, getState) => {
   dispatch(loading());
 
   const data = await fetch(createHourlyForecastRequest(city)).catch(error =>
     dispatch(setError(error))
   );
   const parsed = await data.json();
-  dispatch(setList(parsed.list));
+  const currentCity = getState().weather.cities.find(item => item.id === city);
+
+  dispatch(setList(parsed.list.slice(0, 6)));
+  dispatch(setCity(currentCity));
 
   dispatch(loaded());
 };

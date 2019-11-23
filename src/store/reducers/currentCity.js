@@ -8,24 +8,28 @@ export const currentCityReducer = (
   switch (type) {
     case currentCity.SET: {
       return {
+        ...state,
         city: payload
       };
     }
 
     case currentCity.SET_LIST: {
       return {
+        ...state,
         list: payload
       };
     }
 
     case currentCity.LOADING: {
       return {
+        ...state,
         isLoading: true
       };
     }
 
     case currentCity.LOADED: {
       return {
+        ...state,
         isLoading: false
       };
     }

@@ -24,7 +24,7 @@ export const localStorageReducer = (
       });
       loadToLocalStorage(cities);
 
-      return { cities };
+      return { ...state, cities };
     }
 
     case weather.REMOVE_CITY: {
@@ -41,7 +41,7 @@ export const localStorageReducer = (
       loadToLocalStorage(cities);
 >>>>>>> dev
 
-      return { cities };
+      return { ...state, cities };
     }
     default: {
       return state;

@@ -10,6 +10,7 @@ import { SearchCityPanel } from "components/SearchCityPanel";
 import { fetchCitiesFromLocalStorage } from "store/actions/localStorage";
 
 import * as s from "styles/App";
+import { CurrentCityPanel } from "components/CurrentCityPanel";
 
 const App = ({ fetchCitiesFromLocalStorage, loading }) => {
   useEffect(() => {
@@ -22,6 +23,7 @@ const App = ({ fetchCitiesFromLocalStorage, loading }) => {
       <Header></Header>
       <WidgetPanel></WidgetPanel>
       <SearchCityPanel></SearchCityPanel>
+      <CurrentCityPanel></CurrentCityPanel>
     </s.App>
   );
 };

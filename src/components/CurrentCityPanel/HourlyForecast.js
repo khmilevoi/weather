@@ -15,25 +15,25 @@ export const HourlyForecast = ({ list, isLoading }) => {
         <CircularProgress />
       ) : (
         <>
-          <Slide direction="up" in={true} timeout={400}>
-            <s.InformationList>
-              {list.map(item => {
-                const { dt } = item;
-                const date = parseDt(dt);
+          <s.InformationList>
+            {list.map(item => {
+              const { dt } = item;
+              const date = parseDt(dt);
 
-                const [weather] = item.weather;
+              const [weather] = item.weather;
 
-                return (
-                  <s.InformationColumn key={dt}>
+              return (
+                <s.InformationColumn key={dt}>
+                  <Slide direction="up" in={true} timeout={400}>
                     <s.Inner>
                       <s.Time>{`${date.hours}:${date.minutes}`}</s.Time>
                       <s.Icon name={weather.icon}></s.Icon>
                     </s.Inner>
-                  </s.InformationColumn>
-                );
-              })}
-            </s.InformationList>
-          </Slide>
+                  </Slide>
+                </s.InformationColumn>
+              );
+            })}
+          </s.InformationList>
           <Slide direction="up" in={true} timeout={500}>
             <s.ChartWrapper>
               <Chart

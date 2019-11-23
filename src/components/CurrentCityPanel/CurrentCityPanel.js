@@ -52,7 +52,7 @@ const CurrentCityPanel = ({
 }) => {
   const classes = useStyles();
 
-  if (!opened) return <></>;
+  if (!city.id) return <></>;
 
   const { id, name, dt, main } = city;
   const date = parseDt(dt);

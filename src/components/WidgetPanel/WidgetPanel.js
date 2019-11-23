@@ -5,12 +5,17 @@ import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 
 import { fetchCities, removeCity } from "store/actions/weather";
-import { setCity } from "store/actions/currentCity";
+import { fetchHourlyForecast } from "store/actions/currentCity";
 import { Widget } from "./Widget";
 
 import { Section, Container } from "styles/Index";
 
-const WidgetPanel = ({ cities, fetchCities, removeCity, setCity }) => {
+const WidgetPanel = ({
+  cities,
+  fetchCities,
+  removeCity,
+  fetchHourlyForecast
+}) => {
   return (
     <Section>
       <Container>
@@ -21,7 +26,7 @@ const WidgetPanel = ({ cities, fetchCities, removeCity, setCity }) => {
               city={city}
               handleUpdate={() => fetchCities(city.id)}
               handleRemove={() => removeCity(city.id)}
-              handleClick={() => setCity(city.id)}
+              handleClick={() => fetchHourlyForecast(city.id)}
             ></Widget>
           ))}
         </Grid>
@@ -34,7 +39,7 @@ WidgetPanel.propTypes = {
   cities: PropTypes.array.isRequired,
   fetchCities: PropTypes.func.isRequired,
   removeCity: PropTypes.func.isRequired,
-  setCity: PropTypes.func.isRequired
+  fetchHourlyForecast: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({ cities: state.weather.cities });
@@ -42,7 +47,7 @@ const mapStateToProps = state => ({ cities: state.weather.cities });
 const mapDispatchToProps = {
   fetchCities,
   removeCity,
-  setCity
+  fetchHourlyForecast
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WidgetPanel);

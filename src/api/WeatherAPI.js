@@ -15,5 +15,5 @@ export const parseDt = dt => {
   const hours = `0${date.getHours()}`.slice(-2);
   const minutes = `0${date.getMinutes()}`.slice(-2);
 
-  return { date, string: `${date.toDateString()} ${hours}:${minutes}` };
+  return { date, hours, minutes, string: `${date.toDateString()} ${hours}:${minutes}` };
 };

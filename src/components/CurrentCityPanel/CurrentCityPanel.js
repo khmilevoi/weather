@@ -15,6 +15,7 @@ import { Delete as DeleteIcon, Replay as ReplayIcon } from "@material-ui/icons";
 import { fetchCities, removeCity } from "store/actions/weather";
 import { setCity } from "store/actions/currentCity";
 import { parseDt } from "api/WeatherAPI";
+import { HourlyForecast } from "./HourlyForecast";
 
 import * as s from "styles/CurrentCityPanel";
 import { Row } from "styles/Index";
@@ -54,15 +55,20 @@ const CurrentCityPanel = ({
         <s.Time>{date.string}</s.Time>
       </DialogTitle>
       <DialogContent>
-        <s.Main>
-          <s.Temperature>{Math.floor(main.temp)}</s.Temperature>
-          <s.Icon name={weather.icon}></s.Icon>
-        </s.Main>
-        <s.MinMax>
-          <s.Temperature>{Math.floor(main.temp_min)}</s.Temperature>
-          {" / "}
-          <s.Temperature>{Math.floor(main.temp_max)}</s.Temperature>
-        </s.MinMax>
+        <Row column>
+          <s.Main>
+            <s.Temperature>{Math.floor(main.temp)}</s.Temperature>
+            <s.Icon name={weather.icon}></s.Icon>
+          </s.Main>
+          <s.MinMax>
+            <s.Temperature>{Math.floor(main.temp_min)}</s.Temperature>
+            {" / "}
+            <s.Temperature>{Math.floor(main.temp_max)}</s.Temperature>
+          </s.MinMax>
+        </Row>
+        <Row>
+          <HourlyForecast list={list}></HourlyForecast>
+        </Row>
       </DialogContent>
       <DialogActions>
         <Button

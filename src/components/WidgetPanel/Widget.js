@@ -6,12 +6,17 @@ import { Replay as ReplayIcon, Delete as DeleteIcon } from "@material-ui/icons";
 import { parseDt } from "api/WeatherAPI";
 
 import * as s from "styles/Widget";
+import { Row } from "styles/Index";
 
 const useStyles = makeStyles(() => ({
   item: {
     minWidth: "220px",
     maxWidth: "50%",
-    flexGrow: "1"
+    flexGrow: "1",
+
+    "@media (max-width: 500px)": {
+      maxWidth: "100%"
+    }
   },
   card: {
     transition: "0.1s",
@@ -67,14 +72,14 @@ export const Widget = ({ city, handleUpdate, handleRemove, handleClick }) => {
           >
             <DeleteIcon fontSize="small"></DeleteIcon>
           </s.SideButton>
-          <s.Row column>
+          <Row column>
             <s.CityName>{city.name}</s.CityName>
             <s.Time>{string} </s.Time>
-          </s.Row>
-          <s.Row>
+          </Row>
+          <Row>
             <s.Temperature>{Math.floor(temp)}</s.Temperature>
             <s.Icon name={icon}></s.Icon>
-          </s.Row>
+          </Row>
         </s.Widget>
       </Card>
     </Grid>

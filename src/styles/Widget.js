@@ -4,30 +4,6 @@ export const Widget = styled.div`
   max-height: 155px;
 `;
 
-export const Row = styled.div`
-  width: 100%;
-  padding: 10px;
-
-  ${({ column }) =>
-    column
-      ? css`
-          display: block;
-        `
-      : css`
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-        `}
-
-  &:first-of-type {
-    padding-top: 15px;
-  }
-
-  &:last-of-type {
-    padding-bottom: 15px;
-  }
-`;
-
 export const CityName = styled.div`
   font-size: 20px;
   overflow: hidden;
@@ -75,21 +51,21 @@ const animationRule = css`
 `;
 
 export const Rotate = styled.div`
+  display: inline;
+  line-height: 1;
   animation: ${({ rotating }) => (rotating ? animationRule : `none`)};
 `;
 
 export const Temperature = styled.div`
   font-size: 60px;
   color: #757575;
-  padding-right: 20px;
+  display: flex;
   position: relative;
   line-height: 1;
 
   &:after {
     content: "°C";
-    font-size: 20px;
-    position: absolute;
-    top: 0;
+    font-size: 50%;
   }
 `;
 

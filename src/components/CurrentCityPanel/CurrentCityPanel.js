@@ -14,13 +14,14 @@ import { Delete as DeleteIcon, Replay as ReplayIcon } from "@material-ui/icons";
 
 import { fetchCities, removeCity } from "store/actions/weather";
 import { setCity } from "store/actions/currentCity";
+import { parseDt } from "api/WeatherAPI";
 
 import * as s from "styles/CurrentCityPanel";
+import { Row } from "styles/Index";
 
 const useStyles = makeStyles(() => ({
   paper: {
-    width: "100%",
-    height: "100%"
+    width: "100%"
   }
 }));
 
@@ -35,20 +36,39 @@ const CurrentCityPanel = ({
 }) => {
   const classes = useStyles();
 
-  const { id } = city;
+  if (!opened) return <></>;
+
+  const { id, name, dt, main } = city;
+  const date = parseDt(dt);
+  const [weather] = city.weather;
 
   return (
     <Dialog
       open={opened}
       onClose={() => close()}
       classes={{ paper: classes.paper }}
+      scroll="body"
     >
-      <DialogTitle>asd</DialogTitle>
-      <DialogContent>asd</DialogContent>
+      <DialogTitle>
+        <s.CityName>{name}</s.CityName>
+        <s.Time>{date.string}</s.Time>
+      </DialogTitle>
+      <DialogContent>
+        <s.Main>
+          <s.Temperature>{Math.floor(main.temp)}</s.Temperature>
+          <s.Icon name={weather.icon}></s.Icon>
+        </s.Main>
+        <s.MinMax>
+          <s.Temperature>{Math.floor(main.temp_min)}</s.Temperature>
+          {" / "}
+          <s.Temperature>{Math.floor(main.temp_max)}</s.Temperature>
+        </s.MinMax>
+      </DialogContent>
       <DialogActions>
         <Button
           color="secondary"
           startIcon={<DeleteIcon />}
+          size="small"
           onClick={() => removeCity(id) && close()}
         >
           Delete
@@ -56,11 +76,14 @@ const CurrentCityPanel = ({
         <Button
           color="primary"
           endIcon={<ReplayIcon></ReplayIcon>}
+          size="small"
           onClick={() => fetchCities(id)}
         >
           Update
         </Button>
-        <Button onClick={() => close()}>Cancel</Button>
+        <Button size="small" onClick={() => close()}>
+          Cancel
+        </Button>
       </DialogActions>
     </Dialog>
   );
@@ -78,9 +101,9 @@ CurrentCityPanel.propTypes = {
 
 const mapStateToProps = state => ({
   city: state.currentCity.city || {},
+  list: state.currentCity.list,
   opened: !!state.currentCity.city,
-  isLoading: state.currentCity.isLoading,
-  list: state.currentCity.list
+  isLoading: state.currentCity.isLoading
 });
 
 const mapDispatchToProps = {

@@ -13,7 +13,7 @@ import {
   DialogActions,
   Button
 } from "@material-ui/core";
-import { close } from "store/actions/searchCityPanel";
+import { close } from "store/actions/modalPanel";
 import { fetchCities } from "store/actions/weather";
 
 const cities = [
@@ -154,14 +154,14 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const SearchCityPanel = ({ opened, close, fetchCities, lsCities }) => {
+const SearchCityPanel = ({ opened, close, fetchCities, lsCities, modal }) => {
   const [name, setName] = useState("");
 
   const classes = useStyles();
 
   return (
     <Dialog
-      open={opened}
+      open={opened && modal === "search-city"}
       onClose={() => close() && setName("")}
       maxWidth="sm"
       fullWidth={true}
@@ -208,11 +208,12 @@ SearchCityPanel.propTypes = {
   opened: PropTypes.bool.isRequired,
   close: PropTypes.func.isRequired,
   fetchCities: PropTypes.func.isRequired,
-  lsCities: PropTypes.array.isRequired,
+  lsCities: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
-  opened: state.searchCityPanel.opened,
+  opened: state.modalPanel.opened,
+  modal: state.modalPanel.modal,
   lsCities: state.localStorage.cities
 });
 

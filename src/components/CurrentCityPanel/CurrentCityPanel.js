@@ -13,12 +13,13 @@ import {
 import { Delete as DeleteIcon, Replay as ReplayIcon } from "@material-ui/icons";
 
 import { fetchCities, removeCity } from "store/actions/weather";
-import { setCity } from "store/actions/currentCity";
+import { close } from "store/actions/modalPanel";
 import { parseDt } from "api/WeatherAPI";
 import { HourlyForecast } from "./HourlyForecast";
 
 import * as s from "styles/CurrentCityPanel";
 import { Row } from "styles/Index";
+import { fetchHourlyForecast } from "store/actions/currentCity";
 
 const useStyles = makeStyles(() => ({
   paper: {
@@ -44,8 +45,10 @@ const CurrentCityPanel = ({
   isLoading,
   list,
   close,
+  modal,
   fetchCities,
-  removeCity
+  removeCity,
+  fetchHourlyForecast
 }) => {
   const classes = useStyles();
 
@@ -57,7 +60,7 @@ const CurrentCityPanel = ({
 
   return (
     <Dialog
-      open={opened}
+      open={opened && modal === "current-city"}
       onClose={() => close()}
       classes={{ paper: classes.paper }}
       scroll="body"
@@ -79,7 +82,7 @@ const CurrentCityPanel = ({
           </s.MinMax>
         </Row>
         <Row>
-          <HourlyForecast list={list}></HourlyForecast>
+          <HourlyForecast list={list} isLoading={isLoading}></HourlyForecast>
         </Row>
       </DialogContent>
       <DialogActions>
@@ -95,7 +98,7 @@ const CurrentCityPanel = ({
           color="primary"
           endIcon={<ReplayIcon></ReplayIcon>}
           size="small"
-          onClick={() => fetchCities(id)}
+          onClick={() => fetchCities(id) && fetchHourlyForecast(id)}
         >
           Update
         </Button>
@@ -113,21 +116,25 @@ CurrentCityPanel.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   list: PropTypes.array.isRequired,
   close: PropTypes.func.isRequired,
+  modal: PropTypes.string.isRequired,
   fetchCities: PropTypes.func.isRequired,
-  removeCity: PropTypes.func.isRequired
+  removeCity: PropTypes.func.isRequired,
+  fetchHourlyForecast: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   city: state.currentCity.city || {},
   list: state.currentCity.list,
-  opened: !!state.currentCity.city,
+  opened: state.modalPanel.opened,
+  modal: state.modalPanel.modal,
   isLoading: state.currentCity.isLoading
 });
 
 const mapDispatchToProps = {
-  close: () => setCity(null),
+  close,
   fetchCities,
-  removeCity
+  removeCity,
+  fetchHourlyForecast
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrentCityPanel);

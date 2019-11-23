@@ -3,13 +3,15 @@ export const initialState = {
     error: null,
     isLoading: false
   },
-  searchCityPanel: {
-    opened: false
+  modalPanel: {
+    opened: false,
+    modal: ""
   },
   currentCity: {
     city: null,
     isLoading: false,
-    list: []
+    list: [],
+    opened: false
   },
   weather: {
     cities: []

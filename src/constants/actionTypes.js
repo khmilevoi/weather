@@ -4,9 +4,9 @@ export const app = {
   LOADED: "app/isLoading/loaded"
 };
 
-export const searchCityPanel = {
-  OPEN: "searchCityPanel/open",
-  CLOSE: "searchCityPanel/close"
+export const modalPanel = {
+  OPEN: "modalPanel/open",
+  CLOSE: "modalPanel/close"
 };
 
 export const currentCity = {

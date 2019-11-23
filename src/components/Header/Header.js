@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import { AddButton } from "./AddButton";
 import { GeoLocation } from "./GeoLocation";
-import { open } from "store/actions/searchCityPanel";
+import { open } from "store/actions/modalPanel";
 
 import * as s from "styles/Header";
 import { Section } from "styles/Index";
@@ -14,7 +14,7 @@ const Header = ({ open }) => {
   return (
     <Section>
       <s.Container>
-        <AddButton onClick={() => open()}></AddButton>
+        <AddButton onClick={() => open("search-city")}></AddButton>
         <GeoLocation></GeoLocation>
       </s.Container>
     </Section>

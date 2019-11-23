@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { Icon as I, Temperature as Temp } from "styles/Widget";
+import { Icon as I } from "styles/Widget";
 
 export const HourlyForecast = styled.div`
   width: 100%;
@@ -12,13 +12,13 @@ export const InformationList = styled.div`
   height: 100%;
   display: flex;
   flex-wrap: nowrap;
+  z-index: 10;
 `;
 
 export const InformationColumn = styled.div`
   width: 100%;
   height: 100%;
   border-right: 1px rgba(0, 0, 0, 0.05) solid;
-  z-index: 10;
 
   &:last-child {
     border-right: none;
@@ -48,5 +48,3 @@ export const ChartWrapper = styled.div`
   position: absolute;
   z-index: 0;
 `;
-
-export const Temperature = styled(Temp)``;

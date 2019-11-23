@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import * as s from "styles/Chart";
-
 const map = (x, l1, h1, l2, h2) => ((h2 - l2) * (x - l1)) / (h1 - l1) + l2;
 
 const findRange = dots =>
@@ -18,18 +16,13 @@ const findRange = dots =>
     [Infinity, -Infinity, 0]
   );
 
-export const Chart = ({
-  dots,
-  getY,
-  getLabelY,
-  labelComponent,
-  params = {}
-}) => {
+export const Chart = ({ dots, getY, getLabelY, params = {} }) => {
   const {
     radius = 5,
     ellipseColor = "black",
     lineColor = "black",
-    lineWidth = 3
+    lineWidth = 3,
+    textColor = "black"
   } = params;
 
   const sizeX = 100 / dots.length;
@@ -37,16 +30,19 @@ export const Chart = ({
   const [min, max] = findRange(dots.map(item => getY(item)));
 
   return (
-    <s.Chart>
+    <svg width="100%" height="100%">
       {dots.map((item, index) => {
         const x1 = startY + sizeX * (index - 1);
-        const y1 = index > 0 && map(getY(dots[index - 1]), min, max, 10, 90);
+        const y1 = index > 0 && map(getY(dots[index - 1]), min, max, 90, 30);
 
         const x = startY + sizeX * index;
-        const y = map(getY(item), min, max, 10, 90);
+        const y = map(getY(item), min, max, 90, 30);
 
         return (
           <React.Fragment key={index}>
+            <text fill={textColor} x={`${x}%`} y={`${y - 10}%`}>
+              {getLabelY(item)}
+            </text>
             {index > 0 && (
               <line
                 x1={`${x1}%`}
@@ -67,7 +63,7 @@ export const Chart = ({
           </React.Fragment>
         );
       })}
-    </s.Chart>
+    </svg>
   );
 };
 
@@ -75,11 +71,11 @@ Chart.propTypes = {
   dots: PropTypes.array.isRequired,
   getY: PropTypes.func.isRequired,
   getLabelY: PropTypes.func.isRequired,
-  labelComponent: PropTypes.element.isRequired,
   params: PropTypes.shape({
     radius: PropTypes.number,
     ellipseColor: PropTypes.string,
     lineColor: PropTypes.string,
-    lineWidth: PropTypes.number
+    lineWidth: PropTypes.number,
+    textColor: PropTypes.string
   })
 };

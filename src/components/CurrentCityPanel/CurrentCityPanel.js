@@ -22,7 +22,19 @@ import { Row } from "styles/Index";
 
 const useStyles = makeStyles(() => ({
   paper: {
-    width: "100%"
+    width: "100%",
+
+    "@media (max-width: 420px)": {
+      maxWidth: "100% !important",
+      margin: "0"
+    }
+  },
+  content: {
+    overflow: "hidden",
+
+    "@media (max-width: 420px)": {
+      padding: "0"
+    }
   }
 }));
 
@@ -54,7 +66,7 @@ const CurrentCityPanel = ({
         <s.CityName>{name}</s.CityName>
         <s.Time>{date.string}</s.Time>
       </DialogTitle>
-      <DialogContent>
+      <DialogContent className={classes.content}>
         <Row column>
           <s.Main>
             <s.Temperature>{Math.floor(main.temp)}</s.Temperature>

@@ -43,7 +43,7 @@ export const weatherReducer = (
         if (index !== -1) {
           cities[index] = newCity;
         } else {
-          cities.push(newCity);
+          cities.unshift(newCity);
         }
       });
 

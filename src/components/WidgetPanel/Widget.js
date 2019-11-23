@@ -6,12 +6,11 @@ import { Replay as ReplayIcon, Delete as DeleteIcon } from "@material-ui/icons";
 import { parseDt } from "api/WeatherAPI";
 
 import * as s from "styles/Widget";
-import { SideButton, Rotate, Temperature, Icon } from "styles/Index";
 
 const useStyles = makeStyles(() => ({
   item: {
     minWidth: "220px",
-    maxWidth: "100%",
+    maxWidth: "50%",
     flexGrow: "1"
   },
   card: {
@@ -47,18 +46,18 @@ export const Widget = ({ city, handleUpdate, handleRemove, handleClick }) => {
     <Grid item xs={3} className={classes.item}>
       <Card className={classes.card} onClick={() => handleClick()}>
         <s.Widget>
-          <SideButton
+          <s.SideButton
             className="button"
             onClick={event => {
               event.stopPropagation();
               handleUpdate();
             }}
           >
-            <Rotate rotating={city.isLoading}>
+            <s.Rotate rotating={city.isLoading}>
               <ReplayIcon fontSize="small"></ReplayIcon>
-            </Rotate>
-          </SideButton>
-          <SideButton
+            </s.Rotate>
+          </s.SideButton>
+          <s.SideButton
             className="button"
             hoverColor="#F44336"
             onClick={event => {
@@ -67,14 +66,14 @@ export const Widget = ({ city, handleUpdate, handleRemove, handleClick }) => {
             }}
           >
             <DeleteIcon fontSize="small"></DeleteIcon>
-          </SideButton>
+          </s.SideButton>
           <s.Row column>
             <s.CityName>{city.name}</s.CityName>
             <s.Time>{string} </s.Time>
           </s.Row>
           <s.Row>
-            <Temperature>{Math.floor(temp)}</Temperature>
-            <Icon name={icon}></Icon>
+            <s.Temperature>{Math.floor(temp)}</s.Temperature>
+            <s.Icon name={icon}></s.Icon>
           </s.Row>
         </s.Widget>
       </Card>

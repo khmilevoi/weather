@@ -8,7 +8,7 @@ export const fetchCitiesFromLocalStorage = () => async dispatch => {
   const cities = getItem(NAME_OF_ITEM) || [];
 
   if (cities.length > 0) {
-    dispatch(fetchCities(cities));
+    await dispatch(fetchCities(...cities));
   }
 
   dispatch(loaded());

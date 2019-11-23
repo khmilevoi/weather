@@ -1,14 +1,25 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
-import { Dialog, makeStyles } from "@material-ui/core";
+import {
+  Dialog,
+  makeStyles,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button
+} from "@material-ui/core";
+import { Delete as DeleteIcon, Replay as ReplayIcon } from "@material-ui/icons";
+
+import { fetchCities, removeCity } from "store/actions/weather";
 import { setCity, fetchHourlyForecast } from "store/actions/currentCity";
 
 import * as s from "styles/CurrentCityPanel";
 
 const useStyles = makeStyles(() => ({
   paper: {
+    width: "100%",
     height: "100%"
   }
 }));
@@ -19,25 +30,42 @@ const CurrentCityPanel = ({
   cityId,
   isLoading,
   list,
-  setCity,
-  fetchHourlyForecast
+  close,
+  fetchHourlyForecast,
+  fetchCities,
+  removeCity
 }) => {
   const classes = useStyles();
-  // const paperRef = useRef(null);
 
   useEffect(() => {
     opened && fetchHourlyForecast(cityId);
-  }, [opened, cityId, fetchHourlyForecast]);
+  }, [opened, fetchHourlyForecast, cityId]);
 
   return (
     <Dialog
       open={opened}
-      PaperComponent={s.Panel}
-      PaperProps={{}}
-      onClose={() => setCity(null)}
+      onClose={() => close()}
       classes={{ paper: classes.paper }}
     >
-      asd
+      <DialogTitle>asd</DialogTitle>
+      <DialogContent>asd</DialogContent>
+      <DialogActions>
+        <Button
+          color="secondary"
+          startIcon={<DeleteIcon />}
+          onClick={() => removeCity(cityId) && close()}
+        >
+          Delete
+        </Button>{" "}
+        <Button
+          color="primary"
+          endIcon={<ReplayIcon></ReplayIcon>}
+          onClick={() => fetchCities(cityId)}
+        >
+          Update
+        </Button>
+        <Button onClick={() => close()}>Cancel</Button>
+      </DialogActions>
     </Dialog>
   );
 };
@@ -47,7 +75,11 @@ CurrentCityPanel.propTypes = {
   city: PropTypes.object.isRequired,
   cityId: PropTypes.number.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  list: PropTypes.array.isRequired
+  list: PropTypes.array.isRequired,
+  close: PropTypes.func.isRequired,
+  fetchHourlyForecast: PropTypes.func.isRequired,
+  fetchCities: PropTypes.func.isRequired,
+  removeCity: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -66,8 +98,10 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  setCity,
-  fetchHourlyForecast
+  close: () => setCity(null),
+  fetchHourlyForecast,
+  fetchCities,
+  removeCity
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrentCityPanel);

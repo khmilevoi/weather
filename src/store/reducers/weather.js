@@ -51,18 +51,9 @@ export const weatherReducer = (
     }
 
     case weather.REMOVE_CITY: {
-<<<<<<< HEAD
-      const cities = Array.from(state.cities);
-      const index = cities.findIndex(city => city.id === payload.id);
-
-      if (index !== -1) {
-        cities.splice(index, 1);
-      }
-=======
       const cities = Array.from(state.cities).filter(
         city => city.id !== payload
       );
->>>>>>> dev
 
       return { ...state, cities };
     }

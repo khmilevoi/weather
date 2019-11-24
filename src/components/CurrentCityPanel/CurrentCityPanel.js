@@ -50,9 +50,10 @@ const CurrentCityPanel = ({
   const fullScreen = useMediaQuery("(max-width: 420px)");
   const classes = useStyles({ fullScreen });
 
+  // need correct
   if (!city.id) return <></>;
 
-  const { id, name, dt, main } = city;
+  const { id, name, dt, main, sys } = city;
   const date = parseDt(dt);
   const [weather] = city.weather;
 
@@ -65,7 +66,9 @@ const CurrentCityPanel = ({
       scroll="body"
     >
       <DialogTitle>
-        <s.CityName>{name}</s.CityName>
+        <s.CityName>
+          {name}, {sys.country}
+        </s.CityName>
         <s.Time>{date.string}</s.Time>
       </DialogTitle>
       <DialogContent className={classes.content}>

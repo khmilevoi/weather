@@ -15,8 +15,7 @@ export const fetchCityList = name => async (dispatch, getState) => {
       setList(
         parsed.list.filter(
           (city, index, list) =>
-            !getState().localStorage.cities.includes(city.id) &&
-            !list.slice(0, index).find(item => item.name === city.name)
+            !getState().localStorage.cities.includes(city.id)
         )
       )
     );

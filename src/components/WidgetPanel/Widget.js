@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Grid, Card, makeStyles } from "@material-ui/core";
+import { Grid, Card, makeStyles, useMediaQuery } from "@material-ui/core";
 import { Replay as ReplayIcon, Delete as DeleteIcon } from "@material-ui/icons";
 import { parseDt } from "api/WeatherAPI";
 
@@ -9,35 +9,32 @@ import * as s from "styles/Widget";
 import { Row } from "styles/Index";
 
 const useStyles = makeStyles(() => ({
-  item: {
+  item: ({ matches }) => ({
     minWidth: "220px",
-    maxWidth: "50%",
-    flexGrow: "1",
-
-    "@media (max-width: 500px)": {
-      maxWidth: "100%"
-    }
-  },
+    maxWidth: matches ? "100%" : "50%",
+    flexGrow: "1"
+  }),
   card: {
     transition: "0.1s",
     cursor: "pointer",
 
     "& .button": {
-      opacity: "0"
+      visibility: "hidden"
     },
 
     "&:hover": {
       transform: "scale(1.05)",
 
       "& .button": {
-        opacity: "1"
+        visibility: "visible"
       }
     }
   }
 }));
 
 export const Widget = ({ city, handleUpdate, handleRemove, handleClick }) => {
-  const classes = useStyles();
+  const matches = useMediaQuery("(max-width: 500px)");
+  const classes = useStyles({ matches });
 
   const [weather] = city.weather;
   const { icon } = weather;

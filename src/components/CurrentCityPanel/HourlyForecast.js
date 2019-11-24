@@ -38,7 +38,7 @@ export const HourlyForecast = ({ list, isLoading }) => {
             <s.ChartWrapper>
               <Chart
                 dots={list}
-                getY={item => item.main.temp}
+                getY={item => Math.floor(item.main.temp)}
                 getLabelY={item => `${Math.floor(item.main.temp)}°`}
                 params={{
                   ellipseColor: "#757575",

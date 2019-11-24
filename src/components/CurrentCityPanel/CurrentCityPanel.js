@@ -8,7 +8,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Button
+  Button,
+  useMediaQuery
 } from "@material-ui/core";
 import { Delete as DeleteIcon, Replay as ReplayIcon } from "@material-ui/icons";
 
@@ -23,20 +24,16 @@ import { fetchHourlyForecast } from "store/actions/currentCity";
 
 const useStyles = makeStyles(() => ({
   paper: {
-    width: "100%",
-
-    "@media (max-width: 420px)": {
-      maxWidth: "100% !important",
-      margin: "0"
-    }
+    width: "100%"
   },
-  content: {
+  content: ({ fullScreen }) => ({
     overflow: "hidden",
-
-    "@media (max-width: 420px)": {
-      padding: "0"
-    }
-  }
+    paddingLeft: fullScreen ? "inherit" : "0",
+    paddingRight: fullScreen ? "inherit" : "0",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-around"
+  })
 }));
 
 const CurrentCityPanel = ({
@@ -50,7 +47,8 @@ const CurrentCityPanel = ({
   removeCity,
   fetchHourlyForecast
 }) => {
-  const classes = useStyles();
+  const fullScreen = useMediaQuery("(max-width: 420px)");
+  const classes = useStyles({ fullScreen });
 
   if (!city.id) return <></>;
 
@@ -63,6 +61,7 @@ const CurrentCityPanel = ({
       open={opened && modal === "current-city"}
       onClose={() => close()}
       classes={{ paper: classes.paper }}
+      fullScreen={fullScreen}
       scroll="body"
     >
       <DialogTitle>

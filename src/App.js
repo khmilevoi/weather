@@ -12,6 +12,8 @@ import { fetchCitiesFromLocalStorage } from "store/actions/localStorage";
 import * as s from "styles/App";
 import { CurrentCityPanel } from "components/CurrentCityPanel";
 
+fetch("http://localhost:8080/cities?name=mariu").then(data => console.log(data));
+
 const App = ({ fetchCitiesFromLocalStorage, loading }) => {
   useEffect(() => {
     fetchCitiesFromLocalStorage();

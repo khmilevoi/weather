@@ -11,6 +11,8 @@ const PORT = 8080;
 app.get("/cities", (req, res) => {
   const { name, count = 20 } = req.query;
 
+  res.setHeader("Access-Control-Allow-Origin", `http://localhost:${PORT}`);
+
   if (typeof name === "undefined" || isNaN(+count)) {
     res.status(400).send({ code: 400, message: "Bad Request" });
   } else {
@@ -18,8 +20,6 @@ app.get("/cities", (req, res) => {
       const cities = data
         .sort((a, b) => b.coefficient - a.coefficient)
         .slice(0, count);
-
-      debugger;
 
       res.status(200).send({ cnt: cities.length, list: cities });
     });

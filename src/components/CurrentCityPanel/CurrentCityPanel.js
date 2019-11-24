@@ -8,34 +8,32 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Button
+  Button,
+  useMediaQuery
 } from "@material-ui/core";
 import { Delete as DeleteIcon, Replay as ReplayIcon } from "@material-ui/icons";
 
 import { fetchCities, removeCity } from "store/actions/weather";
-import { setCity } from "store/actions/currentCity";
+import { close } from "store/actions/modalPanel";
 import { parseDt } from "api/WeatherAPI";
 import { HourlyForecast } from "./HourlyForecast";
 
 import * as s from "styles/CurrentCityPanel";
 import { Row } from "styles/Index";
+import { fetchHourlyForecast } from "store/actions/currentCity";
 
 const useStyles = makeStyles(() => ({
   paper: {
-    width: "100%",
-
-    "@media (max-width: 420px)": {
-      maxWidth: "100% !important",
-      margin: "0"
-    }
+    width: "100%"
   },
-  content: {
+  content: ({ fullScreen }) => ({
     overflow: "hidden",
-
-    "@media (max-width: 420px)": {
-      padding: "0"
-    }
-  }
+    paddingLeft: fullScreen ? "inherit" : "0",
+    paddingRight: fullScreen ? "inherit" : "0",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-around"
+  })
 }));
 
 const CurrentCityPanel = ({
@@ -44,12 +42,15 @@ const CurrentCityPanel = ({
   isLoading,
   list,
   close,
+  modal,
   fetchCities,
-  removeCity
+  removeCity,
+  fetchHourlyForecast
 }) => {
-  const classes = useStyles();
+  const fullScreen = useMediaQuery("(max-width: 420px)");
+  const classes = useStyles({ fullScreen });
 
-  if (!opened) return <></>;
+  if (!city.id) return <></>;
 
   const { id, name, dt, main } = city;
   const date = parseDt(dt);
@@ -57,9 +58,10 @@ const CurrentCityPanel = ({
 
   return (
     <Dialog
-      open={opened}
+      open={opened && modal === "current-city"}
       onClose={() => close()}
       classes={{ paper: classes.paper }}
+      fullScreen={fullScreen}
       scroll="body"
     >
       <DialogTitle>
@@ -79,7 +81,7 @@ const CurrentCityPanel = ({
           </s.MinMax>
         </Row>
         <Row>
-          <HourlyForecast list={list}></HourlyForecast>
+          <HourlyForecast list={list} isLoading={isLoading}></HourlyForecast>
         </Row>
       </DialogContent>
       <DialogActions>
@@ -95,7 +97,7 @@ const CurrentCityPanel = ({
           color="primary"
           endIcon={<ReplayIcon></ReplayIcon>}
           size="small"
-          onClick={() => fetchCities(id)}
+          onClick={() => fetchCities(id) && fetchHourlyForecast(id)}
         >
           Update
         </Button>
@@ -113,21 +115,25 @@ CurrentCityPanel.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   list: PropTypes.array.isRequired,
   close: PropTypes.func.isRequired,
+  modal: PropTypes.string.isRequired,
   fetchCities: PropTypes.func.isRequired,
-  removeCity: PropTypes.func.isRequired
+  removeCity: PropTypes.func.isRequired,
+  fetchHourlyForecast: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   city: state.currentCity.city || {},
   list: state.currentCity.list,
-  opened: !!state.currentCity.city,
+  opened: state.modalPanel.opened,
+  modal: state.modalPanel.modal,
   isLoading: state.currentCity.isLoading
 });
 
 const mapDispatchToProps = {
-  close: () => setCity(null),
+  close,
   fetchCities,
-  removeCity
+  removeCity,
+  fetchHourlyForecast
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrentCityPanel);

@@ -6,9 +6,13 @@ export const HourlyForecast = styled.div`
   width: 100%;
   height: 200px;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const InformationList = styled.div`
+  width: 100%;
   height: 100%;
   display: flex;
   flex-wrap: nowrap;

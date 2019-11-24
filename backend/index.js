@@ -11,10 +11,10 @@ const PORT = 8080;
 app.get("/cities", (req, res) => {
   const { name, count = 20 } = req.query;
 
-  res.setHeader("Access-Control-Allow-Origin", `http://localhost:${PORT}`);
+  res.setHeader("Access-Control-Allow-Origin", `*`);
 
-  if (typeof name === "undefined" || isNaN(+count)) {
-    res.status(400).send({ code: 400, message: "Bad Request" });
+  if (typeof name === "undefined" || isNaN(+count) || count < 1) {
+    res.status(400).send();
   } else {
     db.find(name).then(data => {
       const cities = data

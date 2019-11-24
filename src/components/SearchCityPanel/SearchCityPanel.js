@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
@@ -26,6 +26,19 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
+const slowMotion = (func, ms = 500) => {
+  let id = null;
+
+  return (...args) =>
+    new Promise(resolve => {
+      if (id) {
+        clearTimeout(id);
+      }
+
+      id = setTimeout(() => resolve(func(...args)), ms);
+    });
+};
+
 const SearchCityPanel = ({
   opened,
   close,
@@ -34,15 +47,15 @@ const SearchCityPanel = ({
   cities,
   fetchCityList
 }) => {
-  const [name, setName] = useState("");
   const classes = useStyles();
 
+  const fetchCityListSlowed = slowMotion(fetchCityList);
+
   const handleSearch = name => {
-    setName(name);
-    fetchCityList(name);
+    fetchCityListSlowed(name);
   };
 
-  const handleClose = () => close() && setName("");
+  const handleClose = () => close();
 
   return (
     <Dialog
@@ -57,7 +70,6 @@ const SearchCityPanel = ({
           label="Type the city"
           margin="normal"
           className={classes.input}
-          value={name}
           onChange={event => handleSearch(event.target.value)}
         ></TextField>
       </DialogTitle>

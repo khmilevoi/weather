@@ -11,7 +11,7 @@ export class DataBase {
     let c = 0;
 
     const usedTokens = Array(
-      Math.min(a.length, b.length, b.length - subTokenLength + 1)
+      Math.min(a.length, b.length, Math.abs(b.length - subTokenLength + 1))
     );
 
     for (let i = 0; i < a.length - subTokenLength + 1; ++i) {

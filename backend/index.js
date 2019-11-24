@@ -21,6 +21,8 @@ app.get("/cities", (req, res) => {
         .sort((a, b) => b.coefficient - a.coefficient)
         .slice(0, count);
 
+      console.log(cities);
+
       res.status(200).send({ cnt: cities.length, list: cities });
     });
   }

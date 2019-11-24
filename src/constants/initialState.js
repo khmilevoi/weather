@@ -3,6 +3,10 @@ export const initialState = {
     error: null,
     isLoading: false
   },
+  geoLocation: {
+    city: null,
+    isLoading: false
+  },
   modalPanel: {
     opened: false,
     modal: ""
@@ -13,8 +17,7 @@ export const initialState = {
   currentCity: {
     city: null,
     isLoading: false,
-    list: [],
-    opened: false
+    list: []
   },
   weather: {
     cities: []

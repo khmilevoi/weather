@@ -42,7 +42,7 @@ export const Widget = ({ city, handleUpdate, handleRemove, handleClick }) => {
   const { temp } = city.main;
 
   const { dt } = city;
-  const { string } = parseDt(dt);
+  const date = parseDt(dt);
 
   return (
     <Grid item xs={3} className={classes.item}>
@@ -71,7 +71,7 @@ export const Widget = ({ city, handleUpdate, handleRemove, handleClick }) => {
           </s.SideButton>
           <Row column>
             <s.CityName>{city.name}</s.CityName>
-            <s.Time>{string} </s.Time>
+            <s.Time>{date.string} </s.Time>
           </Row>
           <Row>
             <s.Temperature>{Math.floor(temp)}</s.Temperature>

@@ -8,7 +8,7 @@ export const createForecastRequest = (...id) =>
   }&units=metric`;
 
 export const createForecastRequestByPosition = (lat, lon) =>
-  `https://api.openweathermap.org/data/2.5/weather?let=${lat}&lon=${lon}&appid=${config.appid}&units=metric`;
+  `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${config.appid}&units=metric`;
 
 export const createHourlyForecastRequest = id =>
   `https://api.openweathermap.org/data/2.5/forecast?id=${id}&appid=${config.appid}&units=metric`;

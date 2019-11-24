@@ -6,6 +6,7 @@ import { currentCityReducer } from "./currentCity";
 import { localStorageReducer } from "./localStorage";
 import { weatherReducer } from "./weather";
 import { searchCityReducer } from "./searchCity";
+import { geoLocationReducer } from "./geoLocation";
 
 export const root = combineReducers({
   app: appReducer,
@@ -13,5 +14,6 @@ export const root = combineReducers({
   currentCity: currentCityReducer,
   localStorage: localStorageReducer,
   weather: weatherReducer,
-  searchCity: searchCityReducer
+  searchCity: searchCityReducer,
+  geoLocation: geoLocationReducer
 });

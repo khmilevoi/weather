@@ -1,4 +1,5 @@
 import express from "express";
+import path from "path";
 
 import cityList from "./city.list.min.json.js";
 import { DataBase } from "./DataBase.js";
@@ -6,7 +7,8 @@ import { DataBase } from "./DataBase.js";
 const db = new DataBase(cityList, "name");
 
 const app = express();
-const PORT = 8080;
+
+const PORT = process.env.PORT || 8080;
 
 app.get("/cities", (req, res) => {
   const { name, count = 20 } = req.query;
@@ -24,6 +26,12 @@ app.get("/cities", (req, res) => {
       res.status(200).send({ cnt: cities.length, list: cities });
     });
   }
+});
+
+app.use(express.static(path.join(path.resolve(), "build/")));
+
+app.get("*", (_, res) => {
+  res.sendFile(path.join(path.resolve(), "build/index.html"));
 });
 
 app.listen(PORT, () => {

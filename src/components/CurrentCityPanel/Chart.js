@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const map = (x, l1, h1, l2, h2) => ((h2 - l2) * (x - l1)) / (h1 - l1) + l2;
+const map = (x, l1, h1, l2, h2) =>
+  ((h2 - l2) * (x - l1)) / (h1 === l1 ? 1 : h1 - l1) + l2;
 
 const findRange = dots =>
   dots.reduce(

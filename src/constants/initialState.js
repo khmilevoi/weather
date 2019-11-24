@@ -7,6 +7,9 @@ export const initialState = {
     opened: false,
     modal: ""
   },
+  searchCity: {
+    list: []
+  },
   currentCity: {
     city: null,
     isLoading: false,

@@ -9,6 +9,10 @@ export const modalPanel = {
   CLOSE: "modalPanel/close"
 };
 
+export const searchCity = {
+  SET_LIST: "searchCity/list/set"
+};
+
 export const currentCity = {
   SET: "currentCity/city/set",
   LOADING: "currentCity/isLoading/loading",

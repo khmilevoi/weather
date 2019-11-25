@@ -20,24 +20,20 @@ const App = ({ fetchCitiesFromLocalStorage, loading }) => {
 
   return (
     <s.App>
-      {loading ? (
-        <Loading></Loading>
-      ) : (
-        <>
-          <Header></Header>
-          <WidgetPanel></WidgetPanel>
+      {loading && <Loading></Loading>}
 
-          <Switch>
-            <Route exact path="/search">
-              <SearchCityPanel></SearchCityPanel>
-            </Route>
+      <Header></Header>
+      <WidgetPanel></WidgetPanel>
 
-            <Route exact path="/detail/:id">
-              <CurrentCityPanel></CurrentCityPanel>
-            </Route>
-          </Switch>
-        </>
-      )}
+      <Switch>
+        <Route exact path="/search">
+          <SearchCityPanel></SearchCityPanel>
+        </Route>
+
+        <Route exact path="/detail/:id">
+          <CurrentCityPanel></CurrentCityPanel>
+        </Route>
+      </Switch>
     </s.App>
   );
 };

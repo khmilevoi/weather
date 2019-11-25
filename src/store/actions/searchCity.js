@@ -1,5 +1,6 @@
 import { searchCity } from "constants/actionTypes";
 import { createSearchRequest } from "api/citiesSearchAPI";
+import { setError } from "./app";
 
 export const setList = list => ({
   type: searchCity.SET_LIST,
@@ -7,18 +8,19 @@ export const setList = list => ({
 });
 
 export const fetchCityList = name => async (dispatch, getState) => {
-  const data = await fetch(createSearchRequest(name));
-  const parsed = await data.json();
+  try {
+    const data = await fetch(createSearchRequest(name));
+    const parsed = await data.json();
 
-  if (parsed.list) {
     dispatch(
       setList(
         parsed.list.filter(
           (city, index, list) =>
-            !getState().localStorage.cities.includes(city.id) &&
-            !list.slice(0, index).find(item => item.name === city.name)
+            !getState().localStorage.cities.includes(city.id)
         )
       )
     );
+  } catch (error) {
+    dispatch(setError(error));
   }
 };

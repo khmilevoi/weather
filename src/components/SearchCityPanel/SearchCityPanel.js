@@ -13,7 +13,8 @@ import {
   DialogActions,
   Button
 } from "@material-ui/core";
-import { close } from "store/actions/modalPanel";
+import { withRouter } from "react-router-dom";
+
 import { fetchCities } from "store/actions/weather";
 import { fetchCityList } from "store/actions/searchCity";
 
@@ -26,7 +27,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const slowMotion = (func, ms = 500) => {
+const slowMotion = (func, ms = 200) => {
   let id = null;
 
   return (...args) =>
@@ -40,12 +41,11 @@ const slowMotion = (func, ms = 500) => {
 };
 
 const SearchCityPanel = ({
-  opened,
-  close,
   fetchCities,
-  modal,
   cities,
-  fetchCityList
+  fetchCityList,
+  match,
+  history
 }) => {
   const classes = useStyles();
 
@@ -55,15 +55,15 @@ const SearchCityPanel = ({
     fetchCityListSlowed(name);
   };
 
-  const handleClose = () => close();
+  const handleClose = () => history.replace("/");
 
   return (
     <Dialog
-      open={opened && modal === "search-city"}
-      onClose={() => handleClose()}
       maxWidth="sm"
       fullWidth={true}
       classes={{ paper: classes.paper }}
+      open={match.isExact}
+      onClose={() => handleClose()}
     >
       <DialogTitle>
         <TextField
@@ -96,19 +96,18 @@ const SearchCityPanel = ({
 };
 
 SearchCityPanel.propTypes = {
-  opened: PropTypes.bool.isRequired,
-  close: PropTypes.func.isRequired,
   fetchCities: PropTypes.func.isRequired,
   cities: PropTypes.array.isRequired,
   fetchCityList: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  opened: state.modalPanel.opened,
-  modal: state.modalPanel.modal,
   cities: state.searchCity.list
 });
 
-const mapDispatchToProps = { close, fetchCities, fetchCityList };
+const mapDispatchToProps = { fetchCities, fetchCityList };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchCityPanel);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(SearchCityPanel));

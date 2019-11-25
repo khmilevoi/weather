@@ -1,6 +1,6 @@
 const config = {
-  port: 8080,
-  host: "localhost"
+  host: "localhost",
+  port: 8080
 };
 
 export const createSearchRequest = name =>

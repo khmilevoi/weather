@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { Link as L } from "react-router-dom";
 
 export const Section = styled.div`
   width: 100%;
@@ -34,4 +35,9 @@ export const Row = styled.div`
   &:last-of-type {
     padding-bottom: 15px;
   }
+`;
+
+export const Link = styled(L)`
+  color: inherit;
+  text-decoration: none;
 `;

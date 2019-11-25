@@ -1,7 +1,7 @@
 import { currentCity } from "constants/actionTypes";
 import { createHourlyForecastRequest } from "api/WeatherAPI";
 import { setError } from "./app";
-import { open } from "./modalPanel";
+import { fetchCities } from "./weather";
 
 export const setCity = city => ({
   type: currentCity.SET,
@@ -22,17 +22,26 @@ export const setList = list => ({
 });
 
 export const fetchHourlyForecast = city => async (dispatch, getState) => {
-  dispatch(loading());
+  try {
+    dispatch(loading());
 
-  const currentCity = getState().weather.cities.find(item => item.id === city);
-  dispatch(setCity(currentCity));
-  dispatch(open("current-city"));
+    await dispatch(fetchCities(city));
 
-  const data = await fetch(createHourlyForecastRequest(city)).catch(error =>
-    dispatch(setError(error))
-  );
-  const parsed = await data.json();
-  dispatch(setList(parsed.list.slice(0, 6)));
+    const currentCity =
+      getState().weather.cities.find(item => item.id === city) || null;
+    dispatch(setCity(currentCity));
 
-  dispatch(loaded());
+    const response = await fetch(createHourlyForecastRequest(city));
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(response.message);
+    }
+
+    dispatch(setList(data.list.slice(0, 6)));
+  } catch (error) {
+    dispatch(setError(error));
+  } finally {
+    dispatch(loaded());
+  }
 };

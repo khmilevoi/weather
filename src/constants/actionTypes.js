@@ -4,9 +4,10 @@ export const app = {
   LOADED: "app/isLoading/loaded"
 };
 
-export const modalPanel = {
-  OPEN: "modalPanel/open",
-  CLOSE: "modalPanel/close"
+export const geoLocation = {
+  SET: "geoLocation/city/set",
+  LOADING: "geoLocation/isLoading/loading",
+  LOADED: "geoLocation/isLoading/loaded"
 };
 
 export const searchCity = {

@@ -1,14 +1,3 @@
 {
-  "cSpell.words": [
-<<<<<<< HEAD
-    "algolia",
-    "apikey",
-    "openweathermap"
-=======
-    "algoliasearch",
-    "apikey",
-    "openweathermap",
-    "tanimoto"
->>>>>>> dev
-  ]
+  "cSpell.words": ["apikey", "openweathermap", "tanimoto"]
 }

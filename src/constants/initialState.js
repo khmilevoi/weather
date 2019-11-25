@@ -1,20 +1,19 @@
 export const initialState = {
   app: {
-    error: null,
-    isLoading: false
+    errors: [],
+    isLoading: true
   },
-  modalPanel: {
-    opened: false,
-    modal: ""
+  geoLocation: {
+    city: null,
+    isLoading: true
   },
   searchCity: {
     list: []
   },
   currentCity: {
     city: null,
-    isLoading: false,
-    list: [],
-    opened: false
+    isLoading: true,
+    list: []
   },
   weather: {
     cities: []

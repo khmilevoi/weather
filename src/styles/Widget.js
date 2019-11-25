@@ -71,7 +71,7 @@ export const Temperature = styled.div`
 
 const createImgSrc = name => `${process.env.PUBLIC_URL}/img/${name}.png`;
 
-export const Icon = styled.img.attrs(({ name }) => ({
+export const Icon = styled.img.attrs(({ name = "01d" }) => ({
   src: createImgSrc(name)
 }))`
   height: 60px;

@@ -55,8 +55,6 @@ const CurrentCityPanel = ({
   const fullScreen = useMediaQuery("(max-width: 420px)");
   const classes = useStyles({ fullScreen });
 
-  // need correct
-
   const { name, dt, main = {}, sys = {} } = city;
   const date = parseDt(dt);
   const { weather = [] } = city;

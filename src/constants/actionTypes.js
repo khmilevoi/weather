@@ -10,11 +10,6 @@ export const geoLocation = {
   LOADED: "geoLocation/isLoading/loaded"
 };
 
-export const modalPanel = {
-  OPEN: "modalPanel/open",
-  CLOSE: "modalPanel/close"
-};
-
 export const searchCity = {
   SET_LIST: "searchCity/list/set"
 };

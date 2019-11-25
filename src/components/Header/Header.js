@@ -7,11 +7,10 @@ import { Paper, makeStyles } from "@material-ui/core";
 
 import { AddButton } from "./AddButton";
 import { GeoLocation } from "./GeoLocation";
-import { open } from "store/actions/modalPanel";
 import { fetchGeoLocation } from "store/actions/geoLocation";
 
 import * as s from "styles/Header";
-import { Section } from "styles/Index";
+import { Section, Link } from "styles/Index";
 
 const useStyles = makeStyles(() => ({
   paper: {
@@ -22,14 +21,16 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const Header = ({ open, city, fetchGeoLocation, geoLocationLoading }) => {
+const Header = ({ city, fetchGeoLocation, geoLocationLoading }) => {
   const classes = useStyles();
 
   return (
     <Section>
       <s.Container>
         <Paper className={classes.paper}>
-          <AddButton onClick={() => open("search-city")}></AddButton>
+          <Link to="/search">
+            <AddButton></AddButton>
+          </Link>
           <GeoLocation
             city={city}
             handleGeoLocation={fetchGeoLocation}
@@ -42,7 +43,6 @@ const Header = ({ open, city, fetchGeoLocation, geoLocationLoading }) => {
 };
 
 Header.propTypes = {
-  open: PropTypes.func.isRequired,
   city: PropTypes.object.isRequired,
   fetchGeoLocation: PropTypes.func.isRequired,
   geoLocationLoading: PropTypes.bool.isRequired
@@ -53,6 +53,6 @@ const mapStateToProps = state => ({
   geoLocationLoading: state.geoLocation.isLoading
 });
 
-const mapDispatchToProps = { open, fetchGeoLocation };
+const mapDispatchToProps = { fetchGeoLocation };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

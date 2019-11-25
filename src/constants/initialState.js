@@ -7,10 +7,6 @@ export const initialState = {
     city: null,
     isLoading: false
   },
-  modalPanel: {
-    opened: false,
-    modal: ""
-  },
   searchCity: {
     list: []
   },

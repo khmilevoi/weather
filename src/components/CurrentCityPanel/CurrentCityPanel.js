@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
@@ -12,15 +12,15 @@ import {
   useMediaQuery
 } from "@material-ui/core";
 import { Delete as DeleteIcon, Replay as ReplayIcon } from "@material-ui/icons";
+import { withRouter } from "react-router-dom";
 
 import { fetchCities, removeCity } from "store/actions/weather";
-import { close } from "store/actions/modalPanel";
 import { parseDt } from "api/WeatherAPI";
 import { HourlyForecast } from "./HourlyForecast";
+import { fetchHourlyForecast } from "store/actions/currentCity";
 
 import * as s from "styles/CurrentCityPanel";
 import { Row } from "styles/Index";
-import { fetchHourlyForecast } from "store/actions/currentCity";
 
 const useStyles = makeStyles(() => ({
   paper: {
@@ -37,33 +37,40 @@ const useStyles = makeStyles(() => ({
 }));
 
 const CurrentCityPanel = ({
-  opened,
   city,
   isLoading,
   list,
-  close,
-  modal,
   fetchCities,
   removeCity,
-  fetchHourlyForecast
+  fetchHourlyForecast,
+  match,
+  history
 }) => {
+  const id = match.params.id;
+
+  useEffect(() => {
+    fetchHourlyForecast(+id);
+  }, [fetchHourlyForecast, id]);
+
   const fullScreen = useMediaQuery("(max-width: 420px)");
   const classes = useStyles({ fullScreen });
 
   // need correct
-  if (!city.id) return <></>;
 
-  const { id, name, dt, main, sys } = city;
+  const { name, dt, main = {}, sys = {} } = city;
   const date = parseDt(dt);
-  const [weather] = city.weather;
+  const { weather = [] } = city;
+  const [currentWeather = {}] = weather;
+
+  const handleClose = () => history.replace("/");
 
   return (
     <Dialog
-      open={opened && modal === "current-city"}
-      onClose={() => close()}
       classes={{ paper: classes.paper }}
       fullScreen={fullScreen}
       scroll="body"
+      open={match.isExact}
+      onClose={() => handleClose()}
     >
       <DialogTitle>
         <s.CityName>
@@ -75,7 +82,7 @@ const CurrentCityPanel = ({
         <Row column>
           <s.Main>
             <s.Temperature>{Math.floor(main.temp)}</s.Temperature>
-            <s.Icon name={weather.icon}></s.Icon>
+            <s.Icon name={currentWeather.icon}></s.Icon>
           </s.Main>
           <s.MinMax>
             <s.Temperature>{Math.floor(main.temp_min)}</s.Temperature>
@@ -92,7 +99,7 @@ const CurrentCityPanel = ({
           color="secondary"
           startIcon={<DeleteIcon />}
           size="small"
-          onClick={() => removeCity(id) && close()}
+          onClick={() => removeCity(id) && handleClose()}
         >
           Delete
         </Button>{" "}
@@ -104,7 +111,7 @@ const CurrentCityPanel = ({
         >
           Update
         </Button>
-        <Button size="small" onClick={() => close()}>
+        <Button size="small" onClick={() => handleClose()}>
           Cancel
         </Button>
       </DialogActions>
@@ -113,12 +120,9 @@ const CurrentCityPanel = ({
 };
 
 CurrentCityPanel.propTypes = {
-  opened: PropTypes.bool.isRequired,
   city: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   list: PropTypes.array.isRequired,
-  close: PropTypes.func.isRequired,
-  modal: PropTypes.string.isRequired,
   fetchCities: PropTypes.func.isRequired,
   removeCity: PropTypes.func.isRequired,
   fetchHourlyForecast: PropTypes.func.isRequired
@@ -127,16 +131,16 @@ CurrentCityPanel.propTypes = {
 const mapStateToProps = state => ({
   city: state.currentCity.city || {},
   list: state.currentCity.list,
-  opened: state.modalPanel.opened,
-  modal: state.modalPanel.modal,
   isLoading: state.currentCity.isLoading
 });
 
 const mapDispatchToProps = {
-  close,
   fetchCities,
   removeCity,
   fetchHourlyForecast
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CurrentCityPanel);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(CurrentCityPanel));

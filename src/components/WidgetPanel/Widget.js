@@ -6,7 +6,7 @@ import { Replay as ReplayIcon, Delete as DeleteIcon } from "@material-ui/icons";
 import { parseDt } from "api/WeatherAPI";
 
 import * as s from "styles/Widget";
-import { Row } from "styles/Index";
+import { Row, Link } from "styles/Index";
 
 const useStyles = makeStyles(() => ({
   item: ({ matches }) => ({
@@ -32,7 +32,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-export const Widget = ({ city, handleUpdate, handleRemove, handleClick }) => {
+export const Widget = ({ city, handleUpdate, handleRemove }) => {
   const matches = useMediaQuery("(max-width: 500px)");
   const classes = useStyles({ matches });
 
@@ -46,39 +46,43 @@ export const Widget = ({ city, handleUpdate, handleRemove, handleClick }) => {
 
   return (
     <Grid item xs={3} className={classes.item}>
-      <Card className={classes.card} onClick={() => handleClick()}>
-        <s.Widget>
-          <s.SideButton
-            className="button"
-            onClick={event => {
-              event.stopPropagation();
-              handleUpdate();
-            }}
-          >
-            <s.Rotate rotating={city.isLoading}>
-              <ReplayIcon fontSize="small"></ReplayIcon>
-            </s.Rotate>
-          </s.SideButton>
-          <s.SideButton
-            className="button"
-            hoverColor="#F44336"
-            onClick={event => {
-              event.stopPropagation();
-              handleRemove();
-            }}
-          >
-            <DeleteIcon fontSize="small"></DeleteIcon>
-          </s.SideButton>
-          <Row column>
-            <s.CityName>{city.name}</s.CityName>
-            <s.Time>{date.string} </s.Time>
-          </Row>
-          <Row>
-            <s.Temperature>{Math.floor(temp)}</s.Temperature>
-            <s.Icon name={icon}></s.Icon>
-          </Row>
-        </s.Widget>
-      </Card>
+      <Link to={`/detail/${city.id}`} key={city.id}>
+        <Card className={classes.card}>
+          <s.Widget>
+            <s.SideButton
+              className="button"
+              onClick={event => {
+                event.preventDefault();
+                event.stopPropagation();
+                handleUpdate();
+              }}
+            >
+              <s.Rotate rotating={city.isLoading}>
+                <ReplayIcon fontSize="small"></ReplayIcon>
+              </s.Rotate>
+            </s.SideButton>
+            <s.SideButton
+              className="button"
+              hoverColor="#F44336"
+              onClick={event => {
+                event.preventDefault();
+                event.stopPropagation();
+                handleRemove();
+              }}
+            >
+              <DeleteIcon fontSize="small"></DeleteIcon>
+            </s.SideButton>
+            <Row column>
+              <s.CityName>{city.name}</s.CityName>
+              <s.Time>{date.string} </s.Time>
+            </Row>
+            <Row>
+              <s.Temperature>{Math.floor(temp)}</s.Temperature>
+              <s.Icon name={icon}></s.Icon>
+            </Row>
+          </s.Widget>
+        </Card>
+      </Link>
     </Grid>
   );
 };
@@ -86,6 +90,5 @@ export const Widget = ({ city, handleUpdate, handleRemove, handleClick }) => {
 Widget.propTypes = {
   city: PropTypes.object.isRequired,
   handleUpdate: PropTypes.func.isRequired,
-  handleRemove: PropTypes.func.isRequired,
-  handleClick: PropTypes.func.isRequired
+  handleRemove: PropTypes.func.isRequired
 };

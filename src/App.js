@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
+import { Switch, Route } from "react-router-dom";
 
 import { WidgetPanel } from "components/WidgetPanel";
 import { Header } from "components/Header";
@@ -19,11 +20,24 @@ const App = ({ fetchCitiesFromLocalStorage, loading }) => {
 
   return (
     <s.App>
-      {loading && <Loading></Loading>}
-      <Header></Header>
-      <WidgetPanel></WidgetPanel>
-      <SearchCityPanel></SearchCityPanel>
-      <CurrentCityPanel></CurrentCityPanel>
+      {loading ? (
+        <Loading></Loading>
+      ) : (
+        <>
+          <Header></Header>
+          <WidgetPanel></WidgetPanel>
+
+          <Switch>
+            <Route exact path="/search">
+              <SearchCityPanel></SearchCityPanel>
+            </Route>
+
+            <Route exact path="/detail/:id">
+              <CurrentCityPanel></CurrentCityPanel>
+            </Route>
+          </Switch>
+        </>
+      )}
     </s.App>
   );
 };

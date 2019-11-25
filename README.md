@@ -15,6 +15,8 @@ Such a development stack was used to develop the app:
 The interface was created through Material UI and styled-components. Store management was designed through Redux. Routing was designed through React-router.
 Server side was designed for realisation autocomplete city name in search city panel.
 
+Also the app was deployed through "heroku" and located on the [link](https://weather-kh.herokuapp.com)
+
 ## Available Scripts
 
 In the project directory, you can run:

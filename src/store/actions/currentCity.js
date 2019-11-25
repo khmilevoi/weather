@@ -27,8 +27,9 @@ export const fetchHourlyForecast = city => async (dispatch, getState) => {
 
     await dispatch(fetchCities(city));
 
-    const currentCity =
-      getState().weather.cities.find(item => item.id === city) || null;
+    const currentCity = getState().weather.cities.find(
+      item => item.id === city
+    );
     dispatch(setCity(currentCity));
 
     const response = await fetch(createHourlyForecastRequest(city));

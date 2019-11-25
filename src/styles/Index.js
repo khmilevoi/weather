@@ -38,6 +38,6 @@ export const Row = styled.div`
 `;
 
 export const Link = styled(L)`
-  color: none;
+  color: inherit;
   text-decoration: none;
 `;

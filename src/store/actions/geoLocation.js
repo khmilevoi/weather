@@ -1,6 +1,7 @@
 import { geoLocation } from "constants/actionTypes";
 import { getCurrentGeoPosition } from "api/GeoAPI";
 import { createForecastRequestByPosition } from "api/WeatherAPI";
+import { setError } from "./app";
 
 export const setCity = city => ({
   type: geoLocation.SET,
@@ -16,15 +17,20 @@ export const loaded = () => ({
 });
 
 export const fetchGeoLocation = () => async dispatch => {
-  dispatch(loading());
+  try {
+    dispatch(loading());
 
-  const position = await getCurrentGeoPosition();
-  const { coords } = position;
-  const { latitude: lat, longitude: lon } = coords;
+    const position = await getCurrentGeoPosition();
+    const { coords } = position;
+    const { latitude: lat, longitude: lon } = coords;
 
-  const city = await fetch(createForecastRequestByPosition(lat, lon));
-  const parsed = await city.json();
+    const city = await fetch(createForecastRequestByPosition(lat, lon));
+    const parsed = await city.json();
 
-  dispatch(setCity(parsed));
-  dispatch(loaded());
+    dispatch(setCity(parsed));
+  } catch (error) {
+    dispatch(setError(error));
+  } finally {
+    dispatch(loaded());
+  }
 };

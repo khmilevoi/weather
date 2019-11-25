@@ -23,16 +23,18 @@ export const loaded = cities => ({
 });
 
 export const fetchCities = (...cities) => async dispatch => {
-  dispatch(loading(cities));
+  try {
+    dispatch(loading(cities));
 
-  while (cities.length) {
-    const data = await fetch(
-      createForecastRequest(...cities.splice(0, 20))
-    ).catch(error => dispatch(setError(error)));
+    while (cities.length) {
+      const data = await fetch(createForecastRequest(...cities.splice(0, 20)));
 
-    const parsed = await data.json();
-    dispatch(addCities(parsed.list));
+      const parsed = await data.json();
+      dispatch(addCities(parsed.list));
+    }
+
+    dispatch(loaded(cities));
+  } catch (error) {
+    dispatch(setError(error));
   }
-
-  dispatch(loaded(cities));
 };

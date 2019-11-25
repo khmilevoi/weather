@@ -1,18 +1,18 @@
 export const initialState = {
   app: {
     error: null,
-    isLoading: false
+    isLoading: true
   },
   geoLocation: {
     city: null,
-    isLoading: false
+    isLoading: true
   },
   searchCity: {
     list: []
   },
   currentCity: {
     city: null,
-    isLoading: false,
+    isLoading: true,
     list: []
   },
   weather: {

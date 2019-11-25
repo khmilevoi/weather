@@ -55,9 +55,9 @@ const CurrentCityPanel = ({
   const fullScreen = useMediaQuery("(max-width: 420px)");
   const classes = useStyles({ fullScreen });
 
-  const { name, dt, main = {}, sys = {} } = city;
+  const { name, dt, main = {}, sys = {}, weather = [] } = city;
   const date = parseDt(dt);
-  const { weather = [] } = city;
+
   const [currentWeather = {}] = weather;
 
   const handleClose = () => history.replace("/");

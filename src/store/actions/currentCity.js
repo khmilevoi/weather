@@ -21,17 +21,19 @@ export const setList = list => ({
 });
 
 export const fetchHourlyForecast = city => async (dispatch, getState) => {
-  dispatch(loading());
+  try {
+    dispatch(loading());
 
-  const currentCity =
-    getState().weather.cities.find(item => item.id === city) || null;
-  dispatch(setCity(currentCity));
+    const currentCity =
+      getState().weather.cities.find(item => item.id === city) || null;
+    dispatch(setCity(currentCity));
 
-  const data = await fetch(createHourlyForecastRequest(city)).catch(error =>
-    dispatch(setError(error))
-  );
-  const parsed = await data.json();
-  dispatch(setList(parsed.list.slice(0, 6)));
+    const data = await fetch(createHourlyForecastRequest(city));
+    const parsed = await data.json();
+    dispatch(setList(parsed.list.slice(0, 6)));
 
-  dispatch(loaded());
+    dispatch(loaded());
+  } catch (error) {
+    dispatch(setError(error));
+  }
 };

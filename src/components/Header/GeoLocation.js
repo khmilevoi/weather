@@ -12,26 +12,25 @@ export const GeoLocation = ({ city, handleGeoLocation, loading }) => {
     handleGeoLocation();
   }, [handleGeoLocation]);
 
-  // need correct
-  if (loading || !city.main) return <CircularProgress></CircularProgress>;
-
-  const { dt } = city;
+  const { dt, main = {}, weather = [], name } = city;
   const date = parseDt(dt);
 
-  const [weather] = city.weather;
-  const { icon } = weather;
+  const [currentWeather = {}] = weather;
+  const { icon } = currentWeather;
 
-  const { temp } = city.main;
+  const { temp } = main;
 
-  return (
+  return loading ? (
+    <CircularProgress></CircularProgress>
+  ) : (
     <s.GeoLocation>
       <Row column>
-        <s.CityName>{city.name}</s.CityName>
-        <s.Time>{date.string}</s.Time>
+        <s.CityName>{name || "Turn geolocation"}</s.CityName>
+        <s.Time>{dt ? date.string : "--:--"}</s.Time>
       </Row>
       <Row>
-        <s.Temperature>{Math.floor(temp)}</s.Temperature>
-        <s.Icon name={icon}></s.Icon>
+        <s.Temperature>{temp ? Math.floor(temp) : 0}</s.Temperature>
+        {icon && <s.Icon name={icon}></s.Icon>}
       </Row>
     </s.GeoLocation>
   );

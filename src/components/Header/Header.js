@@ -14,6 +14,7 @@ import { Section, Link } from "styles/Index";
 
 const useStyles = makeStyles(() => ({
   paper: {
+    height: "100%",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
@@ -31,11 +32,13 @@ const Header = ({ city, fetchGeoLocation, geoLocationLoading }) => {
           <Link to="/search">
             <AddButton></AddButton>
           </Link>
-          <GeoLocation
-            city={city}
-            handleGeoLocation={fetchGeoLocation}
-            loading={geoLocationLoading}
-          ></GeoLocation>
+          <Link to={`/detail/${city.id}`}>
+            <GeoLocation
+              city={city}
+              handleGeoLocation={fetchGeoLocation}
+              loading={geoLocationLoading}
+            ></GeoLocation>
+          </Link>
         </Paper>
       </s.Container>
     </Section>

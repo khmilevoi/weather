@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const slowMotion = (func, ms = 500) => {
+const slowMotion = (func, ms = 200) => {
   let id = null;
 
   return (...args) =>

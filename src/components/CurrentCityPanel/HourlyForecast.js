@@ -55,5 +55,6 @@ export const HourlyForecast = ({ list, isLoading }) => {
 };
 
 HourlyForecast.propTypes = {
-  list: PropTypes.array.isRequired
+  list: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool.isRequired
 };

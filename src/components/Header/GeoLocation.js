@@ -29,8 +29,8 @@ export const GeoLocation = ({ city, handleGeoLocation, loading }) => {
         <s.Time>{dt ? date.string : "--:--"}</s.Time>
       </Row>
       <Row>
-        <s.Temperature>{temp ? Math.floor(temp) : 0}</s.Temperature>
-        {icon && <s.Icon name={icon}></s.Icon>}
+        <s.Temperature>{Math.floor(temp) || 0}</s.Temperature>
+        <s.Icon name={icon}></s.Icon>
       </Row>
     </s.GeoLocation>
   );

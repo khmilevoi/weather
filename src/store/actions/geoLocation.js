@@ -20,16 +20,22 @@ export const fetchGeoLocation = () => async dispatch => {
   try {
     dispatch(loading());
 
-    const position = await getCurrentGeoPosition();
+    const position = await getCurrentGeoPosition().catch(error => {
+      throw new Error(error.message);
+    });
     const { coords } = position;
     const { latitude: lat, longitude: lon } = coords;
 
-    const city = await fetch(createForecastRequestByPosition(lat, lon));
-    const parsed = await city.json();
+    const response = await fetch(createForecastRequestByPosition(lat, lon));
+    const data = await response.json();
 
-    dispatch(setCity(parsed));
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+
+    dispatch(setCity(data));
   } catch (error) {
-    dispatch(setError(error));
+    dispatch(setError(error.message));
   } finally {
     dispatch(loaded());
   }

@@ -1,6 +1,6 @@
 export const initialState = {
   app: {
-    error: null,
+    errors: [],
     isLoading: true
   },
   geoLocation: {

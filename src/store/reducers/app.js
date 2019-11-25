@@ -4,24 +4,19 @@ import { app } from "constants/actionTypes";
 export const appReducer = (state = initialState.app, { type, payload }) => {
   switch (type) {
     case app.SET_ERROR: {
-      return {
-        ...state,
-        error: payload
-      };
+      const errors = Array.from(state.errors);
+
+      errors.unshift(payload);
+
+      return { ...state, errors };
     }
 
     case app.LOADING: {
-      return {
-        ...state,
-        isLoading: true
-      };
+      return { ...state, isLoading: true };
     }
 
     case app.LOADED: {
-      return {
-        ...state,
-        isLoading: false
-      };
+      return { ...state, isLoading: false };
     }
 
     default: {

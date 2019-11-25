@@ -9,7 +9,7 @@ import {
   DialogContent,
   DialogActions,
   Button,
-  useMediaQuery
+  useMediaQuery,
 } from "@material-ui/core";
 import { Delete as DeleteIcon, Replay as ReplayIcon } from "@material-ui/icons";
 import { withRouter } from "react-router-dom";
@@ -59,6 +59,9 @@ const CurrentCityPanel = ({
   const date = parseDt(dt);
 
   const [currentWeather = {}] = weather;
+  const { icon } = currentWeather;
+
+  const { temp, temp_min, temp_max } = main;
 
   const handleClose = () => history.replace("/");
 
@@ -79,13 +82,13 @@ const CurrentCityPanel = ({
       <DialogContent className={classes.content}>
         <Row column>
           <s.Main>
-            <s.Temperature>{Math.floor(main.temp)}</s.Temperature>
-            <s.Icon name={currentWeather.icon}></s.Icon>
+            <s.Temperature>{Math.floor(temp) || 0}</s.Temperature>
+            <s.Icon name={icon}></s.Icon>
           </s.Main>
           <s.MinMax>
-            <s.Temperature>{Math.floor(main.temp_min)}</s.Temperature>
+            <s.Temperature>{Math.floor(temp_min) || 0}</s.Temperature>
             {" / "}
-            <s.Temperature>{Math.floor(main.temp_max)}</s.Temperature>
+            <s.Temperature>{Math.floor(temp_max) || 0}</s.Temperature>
           </s.MinMax>
         </Row>
         <Row>

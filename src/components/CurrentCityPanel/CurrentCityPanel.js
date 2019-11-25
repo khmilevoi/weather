@@ -52,7 +52,7 @@ const CurrentCityPanel = ({
   match,
   history
 }) => {
-  const id = match.params.id;
+  const id = +match.params.id;
 
   useEffect(() => {
     fetchHourlyForecast(+id);
@@ -121,7 +121,7 @@ const CurrentCityPanel = ({
               color="primary"
               endIcon={<ReplayIcon></ReplayIcon>}
               size="small"
-              onClick={() => fetchCities(id) && fetchHourlyForecast(id)}
+              onClick={() => fetchHourlyForecast(id)}
             >
               Update
             </Button>

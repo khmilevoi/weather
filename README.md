@@ -8,7 +8,7 @@ Such a development stack was used to develop the app:
 
 - redux, react-redux, redux-app
 - react-router-dom
-- materical-ui
+- material-ui
 - express
 - styled-components
 

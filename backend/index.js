@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 8080;
 app.get("/cities", (req, res) => {
   const { name, count = 20 } = req.query;
 
-  res.setHeader("Access-Control-Allow-Origin", *);
+  res.setHeader("Access-Control-Allow-Origin", "*");
 
   if (typeof name === "undefined" || isNaN(+count) || count < 1) {
     res.status(400).send();
@@ -36,5 +36,5 @@ app.get("*", (_, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(start listening on ${PORT});
+  console.log(`start listening on ${PORT}`);
 });

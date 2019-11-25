@@ -6,7 +6,8 @@ import { DataBase } from "./DataBase.js";
 const db = new DataBase(cityList, "name");
 
 const app = express();
-const PORT = 8080;
+
+const PORT = process.env.PORT || 8080;
 
 app.get("/cities", (req, res) => {
   const { name, count = 20 } = req.query;

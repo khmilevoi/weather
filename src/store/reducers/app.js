@@ -8,6 +8,8 @@ export const appReducer = (state = initialState.app, { type, payload }) => {
 
       errors.unshift(payload);
 
+      console.log(errors);
+
       return { ...state, errors };
     }
 

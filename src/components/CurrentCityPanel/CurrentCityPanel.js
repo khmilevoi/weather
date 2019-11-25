@@ -10,6 +10,7 @@ import {
   DialogActions,
   Button,
   useMediaQuery,
+  CircularProgress
 } from "@material-ui/core";
 import { Delete as DeleteIcon, Replay as ReplayIcon } from "@material-ui/icons";
 import { withRouter } from "react-router-dom";
@@ -24,7 +25,8 @@ import { Row } from "styles/Index";
 
 const useStyles = makeStyles(() => ({
   paper: {
-    width: "100%"
+    width: "100%",
+    minHeight: "594px"
   },
   content: ({ fullScreen }) => ({
     overflow: "hidden",
@@ -32,8 +34,12 @@ const useStyles = makeStyles(() => ({
     paddingRight: fullScreen ? "inherit" : "0",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-around"
-  })
+    justifyContent: "space-around",
+    alignItems: "center"
+  }),
+  progress: {
+    margin: "calc(50% - 20px)"
+  }
 }));
 
 const CurrentCityPanel = ({
@@ -73,49 +79,58 @@ const CurrentCityPanel = ({
       open={match.isExact}
       onClose={() => handleClose()}
     >
-      <DialogTitle>
-        <s.CityName>
-          {name}, {sys.country}
-        </s.CityName>
-        <s.Time>{date.string}</s.Time>
-      </DialogTitle>
-      <DialogContent className={classes.content}>
-        <Row column>
-          <s.Main>
-            <s.Temperature>{Math.floor(temp) || 0}</s.Temperature>
-            <s.Icon name={icon}></s.Icon>
-          </s.Main>
-          <s.MinMax>
-            <s.Temperature>{Math.floor(temp_min) || 0}</s.Temperature>
-            {" / "}
-            <s.Temperature>{Math.floor(temp_max) || 0}</s.Temperature>
-          </s.MinMax>
-        </Row>
-        <Row>
-          <HourlyForecast list={list} isLoading={isLoading}></HourlyForecast>
-        </Row>
-      </DialogContent>
-      <DialogActions>
-        <Button
-          color="secondary"
-          startIcon={<DeleteIcon />}
-          size="small"
-          onClick={() => removeCity(id) && handleClose()}
-        >
-          Delete
-        </Button>{" "}
-        <Button
-          color="primary"
-          endIcon={<ReplayIcon></ReplayIcon>}
-          size="small"
-          onClick={() => fetchCities(id) && fetchHourlyForecast(id)}
-        >
-          Update
-        </Button>
-        <Button size="small" onClick={() => handleClose()}>
-          Cancel
-        </Button>
-      </DialogActions>
+      {isLoading ? (
+        <CircularProgress className={classes.progress}></CircularProgress>
+      ) : (
+        <>
+          <DialogTitle>
+            <s.CityName>
+              {name}, {sys.country}
+            </s.CityName>
+            <s.Time>{date.string}</s.Time>
+          </DialogTitle>
+          <DialogContent className={classes.content}>
+            <Row column>
+              <s.Main>
+                <s.Temperature>{Math.floor(temp) || 0}</s.Temperature>
+                <s.Icon name={icon}></s.Icon>
+              </s.Main>
+              <s.MinMax>
+                <s.Temperature>{Math.floor(temp_min) || 0}</s.Temperature>
+                {" / "}
+                <s.Temperature>{Math.floor(temp_max) || 0}</s.Temperature>
+              </s.MinMax>
+            </Row>
+            <Row>
+              <HourlyForecast
+                list={list}
+                isLoading={isLoading}
+              ></HourlyForecast>
+            </Row>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              color="secondary"
+              startIcon={<DeleteIcon />}
+              size="small"
+              onClick={() => removeCity(id) && handleClose()}
+            >
+              Delete
+            </Button>{" "}
+            <Button
+              color="primary"
+              endIcon={<ReplayIcon></ReplayIcon>}
+              size="small"
+              onClick={() => fetchCities(id) && fetchHourlyForecast(id)}
+            >
+              Update
+            </Button>
+            <Button size="small" onClick={() => handleClose()}>
+              Cancel
+            </Button>
+          </DialogActions>
+        </>
+      )}
     </Dialog>
   );
 };

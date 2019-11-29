@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const map = (x, l1, h1, l2, h2) =>
   ((h2 - l2) * (x - l1)) / (h1 === l1 ? 1 : h1 - l1) + l2;
@@ -20,10 +20,10 @@ const findRange = dots =>
 export const Chart = ({ dots, getY, getLabelY, params = {} }) => {
   const {
     radius = 5,
-    ellipseColor = "black",
-    lineColor = "black",
+    ellipseColor = 'black',
+    lineColor = 'black',
     lineWidth = 3,
-    textColor = "black"
+    textColor = 'black'
   } = params;
 
   const sizeX = 100 / dots.length;

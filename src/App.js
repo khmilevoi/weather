@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 
-import { connect } from "react-redux";
-import { Switch, Route } from "react-router-dom";
+import { connect } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
 
-import { WidgetPanel } from "components/WidgetPanel";
-import { Header } from "components/Header";
-import { Loading } from "components/Loading";
-import { SearchCityPanel } from "components/SearchCityPanel";
-import { fetchCitiesFromLocalStorage } from "store/actions/localStorage";
+import { WidgetPanel } from 'components/WidgetPanel';
+import { Header } from 'components/Header';
+import { Loading } from 'components/Loading';
+import { SearchCityPanel } from 'components/SearchCityPanel';
+import { fetchCitiesFromLocalStorage } from 'store/actions/localStorage';
 
-import * as s from "styles/App";
-import { CurrentCityPanel } from "components/CurrentCityPanel";
+import * as s from 'styles/App';
+import { CurrentCityPanel } from 'components/CurrentCityPanel';
 
 const App = ({ fetchCitiesFromLocalStorage, loading }) => {
   useEffect(() => {
@@ -23,7 +23,7 @@ const App = ({ fetchCitiesFromLocalStorage, loading }) => {
       {loading && <Loading></Loading>}
 
       <Header></Header>
-      <WidgetPanel></WidgetPanel>
+      <WidgetPanel></WidgetPanel> 
 
       <Switch>
         <Route exact path="/search">

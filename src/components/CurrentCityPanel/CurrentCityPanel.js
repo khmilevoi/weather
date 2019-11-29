@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import {
   Dialog,
   makeStyles,
@@ -11,34 +11,34 @@ import {
   Button,
   useMediaQuery,
   CircularProgress
-} from "@material-ui/core";
-import { Delete as DeleteIcon, Replay as ReplayIcon } from "@material-ui/icons";
-import { withRouter } from "react-router-dom";
+} from '@material-ui/core';
+import { Delete as DeleteIcon, Replay as ReplayIcon } from '@material-ui/icons';
+import { withRouter } from 'react-router-dom';
 
-import { fetchCities, removeCity } from "store/actions/weather";
-import { parseDt } from "api/WeatherAPI";
-import { HourlyForecast } from "./HourlyForecast";
-import { fetchHourlyForecast } from "store/actions/currentCity";
+import { fetchCities, removeCity } from 'store/actions/weather';
+import { parseDt } from 'api/WeatherAPI';
+import { HourlyForecast } from './HourlyForecast';
+import { fetchHourlyForecast } from 'store/actions/currentCity';
 
-import * as s from "styles/CurrentCityPanel";
-import { Row } from "styles/Index";
+import * as s from 'styles/CurrentCityPanel';
+import { Row } from 'styles/Index';
 
 const useStyles = makeStyles(() => ({
   paper: {
-    width: "100%",
-    minHeight: "594px"
+    width: '100%',
+    minHeight: '594px'
   },
   content: ({ fullScreen }) => ({
-    overflow: "hidden",
-    paddingLeft: fullScreen ? "inherit" : "0",
-    paddingRight: fullScreen ? "inherit" : "0",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-around",
-    alignItems: "center"
+    overflow: 'hidden',
+    paddingLeft: fullScreen ? 'inherit' : '0',
+    paddingRight: fullScreen ? 'inherit' : '0',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center'
   }),
   progress: {
-    margin: "calc(50% - 20px)"
+    margin: 'calc(50% - 20px)'
   }
 }));
 
@@ -52,13 +52,13 @@ const CurrentCityPanel = ({
   match,
   history
 }) => {
-  const id = +match.params.id;
+  const id = useMemo(() => +match.params.id, [match.params.id]);
 
   useEffect(() => {
-    fetchHourlyForecast(+id);
+    fetchHourlyForecast(id);
   }, [fetchHourlyForecast, id]);
 
-  const fullScreen = useMediaQuery("(max-width: 420px)");
+  const fullScreen = useMediaQuery('(max-width: 420px)');
   const classes = useStyles({ fullScreen });
 
   const { name, dt, main = {}, sys = {}, weather = [] } = city;
@@ -69,7 +69,7 @@ const CurrentCityPanel = ({
 
   const { temp, temp_min, temp_max } = main;
 
-  const handleClose = () => history.replace("/");
+  const handleClose = () => history.replace('/');
 
   return (
     <Dialog
@@ -97,7 +97,7 @@ const CurrentCityPanel = ({
               </s.Main>
               <s.MinMax>
                 <s.Temperature>{Math.floor(temp_min) || 0}</s.Temperature>
-                {" / "}
+                {' / '}
                 <s.Temperature>{Math.floor(temp_max) || 0}</s.Temperature>
               </s.MinMax>
             </Row>
@@ -116,7 +116,7 @@ const CurrentCityPanel = ({
               onClick={() => removeCity(id) && handleClose()}
             >
               Delete
-            </Button>{" "}
+            </Button>{' '}
             <Button
               color="primary"
               endIcon={<ReplayIcon></ReplayIcon>}

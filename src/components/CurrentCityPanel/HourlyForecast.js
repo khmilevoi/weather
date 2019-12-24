@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { Slide } from '@material-ui/core';
+import { Slide } from "@material-ui/core";
 
-import { parseDt } from 'api/WeatherAPI';
-import { Chart } from './Chart';
+import { parseDt } from "api/WeatherAPI";
+import { Chart } from "./Chart";
 
-import * as s from 'styles/HourlyForecast';
+import * as s from "styles/HourlyForecast";
 
 export const HourlyForecast = ({ list }) => {
   return (
@@ -37,9 +37,9 @@ export const HourlyForecast = ({ list }) => {
             getY={item => Math.floor(item.main.temp)}
             getLabelY={item => `${Math.floor(item.main.temp)}°`}
             params={{
-              ellipseColor: '#757575',
-              lineColor: 'rgba(0, 0, 0, 0.05)',
-              textColor: '#757575',
+              ellipseColor: "#757575",
+              lineColor: "rgba(0, 0, 0, 0.05)",
+              textColor: "#757575"
             }}
           ></Chart>
         </s.ChartWrapper>
@@ -49,5 +49,5 @@ export const HourlyForecast = ({ list }) => {
 };
 
 HourlyForecast.propTypes = {
-  list: PropTypes.array.isRequired,
+  list: PropTypes.array.isRequired
 };
